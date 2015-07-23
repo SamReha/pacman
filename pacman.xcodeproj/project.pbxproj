@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E402A2C11B607E59009D1ECC /* tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E402A2C01B607E59009D1ECC /* tile.cpp */; };
+		E402A2C41B6087C7009D1ECC /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E402A2C31B6087C7009D1ECC /* map.cpp */; };
 		E4ACA2981B5C8CE3002E8735 /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = E4ACA2971B5C8CE3002E8735 /* ResourcePath.mm */; };
 		E4ACA29B1B5C8CE3002E8735 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4ACA29A1B5C8CE3002E8735 /* main.cpp */; };
 		E4ACA29E1B5C8CE3002E8735 /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E4ACA29D1B5C8CE3002E8735 /* cute_image.jpg */; };
@@ -20,6 +21,8 @@
 /* Begin PBXFileReference section */
 		E402A2BF1B607AD2009D1ECC /* tile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tile.hpp; sourceTree = "<group>"; };
 		E402A2C01B607E59009D1ECC /* tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tile.cpp; sourceTree = "<group>"; };
+		E402A2C21B608003009D1ECC /* map.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = map.hpp; sourceTree = "<group>"; };
+		E402A2C31B6087C7009D1ECC /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map.cpp; sourceTree = "<group>"; };
 		E4ACA2921B5C8CE3002E8735 /* pacman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pacman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4ACA2961B5C8CE3002E8735 /* pacman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pacman-Info.plist"; sourceTree = "<group>"; };
 		E4ACA2971B5C8CE3002E8735 /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
@@ -70,6 +73,8 @@
 				E4ACA2AB1B5C946D002E8735 /* button.cpp */,
 				E402A2BF1B607AD2009D1ECC /* tile.hpp */,
 				E402A2C01B607E59009D1ECC /* tile.cpp */,
+				E402A2C21B608003009D1ECC /* map.hpp */,
+				E402A2C31B6087C7009D1ECC /* map.cpp */,
 				E4ACA29C1B5C8CE3002E8735 /* Resources */,
 				E4ACA2951B5C8CE3002E8735 /* Supporting Files */,
 			);
@@ -185,6 +190,7 @@
 				E4ACA29B1B5C8CE3002E8735 /* main.cpp in Sources */,
 				E4ACA2AC1B5C946D002E8735 /* button.cpp in Sources */,
 				E4ACA2981B5C8CE3002E8735 /* ResourcePath.mm in Sources */,
+				E402A2C41B6087C7009D1ECC /* map.cpp in Sources */,
 				E402A2C11B607E59009D1ECC /* tile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
