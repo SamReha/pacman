@@ -13,6 +13,7 @@
 		E4ACA2A01B5C8CE4002E8735 /* nice_music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = E4ACA29F1B5C8CE4002E8735 /* nice_music.ogg */; };
 		E4ACA2A21B5C8CE4002E8735 /* sansation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4ACA2A11B5C8CE4002E8735 /* sansation.ttf */; };
 		E4ACA2A41B5C8CE4002E8735 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E4ACA2A31B5C8CE4002E8735 /* icon.png */; };
+		E4ACA2AC1B5C946D002E8735 /* button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4ACA2AB1B5C946D002E8735 /* button.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,8 @@
 		E4ACA29F1B5C8CE4002E8735 /* nice_music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice_music.ogg; sourceTree = "<group>"; };
 		E4ACA2A11B5C8CE4002E8735 /* sansation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sansation.ttf; sourceTree = "<group>"; };
 		E4ACA2A31B5C8CE4002E8735 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		E4ACA2AA1B5C907E002E8735 /* button.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = button.hpp; sourceTree = "<group>"; };
+		E4ACA2AB1B5C946D002E8735 /* button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = button.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +63,10 @@
 				E4ACA2971B5C8CE3002E8735 /* ResourcePath.mm */,
 				E4ACA2991B5C8CE3002E8735 /* ResourcePath.hpp */,
 				E4ACA29A1B5C8CE3002E8735 /* main.cpp */,
+				E4ACA2AA1B5C907E002E8735 /* button.hpp */,
 				E4ACA29C1B5C8CE3002E8735 /* Resources */,
 				E4ACA2951B5C8CE3002E8735 /* Supporting Files */,
+				E4ACA2AB1B5C946D002E8735 /* button.cpp */,
 			);
 			path = pacman;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4ACA29B1B5C8CE3002E8735 /* main.cpp in Sources */,
+				E4ACA2AC1B5C946D002E8735 /* button.cpp in Sources */,
 				E4ACA2981B5C8CE3002E8735 /* ResourcePath.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
