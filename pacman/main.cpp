@@ -38,7 +38,14 @@ int main(int, char const**)
     return EXIT_FAILURE;
   }
   sf::Sprite sprite(texture);
-  // More importantly,
+  
+  // More importantly, let's build up a tileset.
+  sf::Texture level_texture;
+  if (!level_texture.loadFromFile(resourcePath() + "data/level_texture.png")) {
+    return EXIT_FAILURE;
+  }
+  sf::Sprite top_left_corner(level_texture, sf::Rect<int>(0, 7, 8, 8));
+  
 
   // Create a graphical text to display
   sf::Font font;
@@ -78,6 +85,8 @@ int main(int, char const**)
 
     // Draw the sprite
     window.draw(sprite);
+    
+    window.draw(top_left_corner);
 
     // Draw the string
     window.draw(text);

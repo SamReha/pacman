@@ -1,12 +1,12 @@
 #include "map.hpp"
-#include "tile.hpp"
+//#include "tile.hpp"
 
 Map::Map(sf::Vector2<double> anchor, sf::Vector2<int> sze, int width) {
   anchorPoint = anchor;
   size = sze;
   tileWidth = width;
   
-  mapBody = new Tile* [size.x*size.y];
+  mapBody = new PacTile* [size.x*size.y];
 }
 
 // Private
@@ -27,24 +27,24 @@ int Map::getIndexFromPoint(sf::Vector2<double> point) {
 }
 
 // Public
-void Map::setTile(sf::Vector2<int> indexes, sf::Sprite spr, type typeOfTile) {
-  Tile* tempTile = new Tile(indexes, spr, typeOfTile);
+void Map::setTile(sf::Vector2<int> indexes, sf::Sprite spr, sf::String typeOfTile) {
+  PacTile* tempTile = new PacTile(indexes, spr, typeOfTile);
   int realIndex = indexes.y*size.x + indexes.x;
   mapBody[realIndex] = tempTile;
 }
 
-void Map::setTile(sf::Vector2<int> indexes, Tile* tile) {
+void Map::setTile(sf::Vector2<int> indexes, PacTile* tile) {
   // Since we are smashing a 2D array into a 1D array, the real index is the number of rows down (The y pos * the row width) plus how many columns over (the x pos)
   int realIndex = indexes.y*size.x + indexes.x;
   mapBody[realIndex] = tile;
 }
 
-Tile* Map::getTileAtIndex(sf::Vector2<int> pos) {
+PacTile* Map::getTileAtIndex(sf::Vector2<int> pos) {
   int realIndex = pos.y*size.x + pos.x;
   return mapBody[realIndex];
 }
 
-Tile* Map::getTileAtPoint(sf::Vector2<double> point) {
+PacTile* Map::getTileAtPoint(sf::Vector2<double> point) {
   int realIndex = getIndexFromPoint(point);
   return mapBody[realIndex];
 }

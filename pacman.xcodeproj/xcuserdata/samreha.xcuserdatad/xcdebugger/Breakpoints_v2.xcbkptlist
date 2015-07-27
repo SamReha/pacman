@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "pacman/map.cpp"
-            timestampString = "459648332.443402"
+            timestampString = "459655096.870083"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "Map::getTileAtPoint(sf::Vector2&lt;double&gt; point)"
             landmarkType = "5">
          </BreakpointContent>

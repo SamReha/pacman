@@ -1,6 +1,6 @@
 # include "tile.hpp"
 
-Tile::Tile(sf::Vector2<int> pos, sf::Sprite spr, type typeOfTile){
+PacTile::PacTile(sf::Vector2<int> pos, sf::Sprite spr, sf::String typeOfTile){
   position = pos;
   sprite = spr;
   tileType = typeOfTile;
@@ -9,10 +9,14 @@ Tile::Tile(sf::Vector2<int> pos, sf::Sprite spr, type typeOfTile){
 // Private
 
 // Public
-sf::Vector2<int> Tile::getPosition() {
+sf::Vector2<int> PacTile::getPosition() {
   return position;
 }
 
-sf::Sprite Tile::getSprite() {
+sf::Sprite PacTile::getSprite() {
   return sprite;
+}
+
+sf::String PacTile::getType() {
+  return tileType;
 }
