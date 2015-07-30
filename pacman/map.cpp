@@ -28,7 +28,7 @@ int Map::getIndexFromPoint(sf::Vector2<double> point) {
 
 // Public
 void Map::setTile(sf::Vector2<int> indexes, sf::Sprite spr, sf::String typeOfTile) {
-  PacTile* tempTile = new PacTile(indexes, spr, typeOfTile);
+  PacTile* tempTile = new PacTile(spr, typeOfTile);
   int realIndex = indexes.y*size.x + indexes.x;
   mapBody[realIndex] = tempTile;
 }
@@ -51,6 +51,14 @@ PacTile* Map::getTileAtPoint(sf::Vector2<double> point) {
 
 sf::Vector2<int> Map::getSize() {
   return size;
+}
+
+sf::Vector2<double> Map::getAnchor() {
+  return anchorPoint;
+}
+
+int Map::getTileWidth() {
+  return tileWidth;
 }
 
 void Map::deleteTile(sf::Vector2<int> indexes) {
