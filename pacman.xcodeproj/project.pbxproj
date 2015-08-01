@@ -12,6 +12,9 @@
 		E4105D811B6D7341005D5A8D /* maze_obj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4105D801B6D7341005D5A8D /* maze_obj.cpp */; };
 		E4105D841B6D7654005D5A8D /* pellet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4105D831B6D7654005D5A8D /* pellet.cpp */; };
 		E4105D871B6D821B005D5A8D /* pinky.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4105D861B6D821B005D5A8D /* pinky.cpp */; };
+		E4105D8E1B6D884C005D5A8D /* inky.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4105D881B6D884C005D5A8D /* inky.cpp */; };
+		E4105D8F1B6D884C005D5A8D /* sue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4105D8A1B6D884C005D5A8D /* sue.cpp */; };
+		E4105D901B6D884C005D5A8D /* blinky.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4105D8C1B6D884C005D5A8D /* blinky.cpp */; };
 		E429AFF81B687191008A611F /* ghost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E429AFF71B687191008A611F /* ghost.cpp */; };
 		E4ACA2981B5C8CE3002E8735 /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = E4ACA2971B5C8CE3002E8735 /* ResourcePath.mm */; };
 		E4ACA29B1B5C8CE3002E8735 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4ACA29A1B5C8CE3002E8735 /* main.cpp */; };
@@ -33,6 +36,12 @@
 		E4105D831B6D7654005D5A8D /* pellet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pellet.cpp; sourceTree = "<group>"; };
 		E4105D851B6D81EA005D5A8D /* pinky.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pinky.hpp; sourceTree = "<group>"; };
 		E4105D861B6D821B005D5A8D /* pinky.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pinky.cpp; sourceTree = "<group>"; };
+		E4105D881B6D884C005D5A8D /* inky.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = inky.cpp; sourceTree = "<group>"; };
+		E4105D891B6D884C005D5A8D /* inky.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = inky.hpp; sourceTree = "<group>"; };
+		E4105D8A1B6D884C005D5A8D /* sue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sue.cpp; sourceTree = "<group>"; };
+		E4105D8B1B6D884C005D5A8D /* sue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sue.hpp; sourceTree = "<group>"; };
+		E4105D8C1B6D884C005D5A8D /* blinky.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blinky.cpp; sourceTree = "<group>"; };
+		E4105D8D1B6D884C005D5A8D /* blinky.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = blinky.hpp; sourceTree = "<group>"; };
 		E429AFF71B687191008A611F /* ghost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ghost.cpp; sourceTree = "<group>"; };
 		E47922FB1B67289B00B47513 /* ghost.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ghost.hpp; sourceTree = "<group>"; };
 		E4ACA2921B5C8CE3002E8735 /* pacman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pacman.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +104,12 @@
 				E429AFF71B687191008A611F /* ghost.cpp */,
 				E4105D851B6D81EA005D5A8D /* pinky.hpp */,
 				E4105D861B6D821B005D5A8D /* pinky.cpp */,
+				E4105D8D1B6D884C005D5A8D /* blinky.hpp */,
+				E4105D8C1B6D884C005D5A8D /* blinky.cpp */,
+				E4105D891B6D884C005D5A8D /* inky.hpp */,
+				E4105D881B6D884C005D5A8D /* inky.cpp */,
+				E4105D8B1B6D884C005D5A8D /* sue.hpp */,
+				E4105D8A1B6D884C005D5A8D /* sue.cpp */,
 				E4ACA29C1B5C8CE3002E8735 /* Resources */,
 				E4ACA2951B5C8CE3002E8735 /* Supporting Files */,
 			);
@@ -207,6 +222,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4105D8F1B6D884C005D5A8D /* sue.cpp in Sources */,
+				E4105D901B6D884C005D5A8D /* blinky.cpp in Sources */,
 				E4ACA29B1B5C8CE3002E8735 /* main.cpp in Sources */,
 				E4105D841B6D7654005D5A8D /* pellet.cpp in Sources */,
 				E429AFF81B687191008A611F /* ghost.cpp in Sources */,
@@ -214,6 +231,7 @@
 				E4ACA2981B5C8CE3002E8735 /* ResourcePath.mm in Sources */,
 				E4105D871B6D821B005D5A8D /* pinky.cpp in Sources */,
 				E402A2C41B6087C7009D1ECC /* map.cpp in Sources */,
+				E4105D8E1B6D884C005D5A8D /* inky.cpp in Sources */,
 				E4105D811B6D7341005D5A8D /* maze_obj.cpp in Sources */,
 				E402A2C11B607E59009D1ECC /* tile.cpp in Sources */,
 			);

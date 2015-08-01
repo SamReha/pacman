@@ -1,13 +1,13 @@
 #include "maze_obj.hpp"
 
 class Ghost: public Maze_obj {
-private:
+protected:
   std::vector<sf::Sprite> upSprites;
   std::vector<sf::Sprite> downSprites;
   std::vector<sf::Sprite> leftSprites;
   std::vector<sf::Sprite> rightSprites;
-  std::vector<sf::Sprite> ghostBlueSprites;
-  std::vector<sf::Sprite> ghostWhiteSprites;
+  std::vector<sf::Sprite> blueSprites;
+  std::vector<sf::Sprite> whiteSprites;
   sf::Sprite ghostEyesUp;
   sf::Sprite ghostEyesDown;
   sf::Sprite ghostEyesLeft;

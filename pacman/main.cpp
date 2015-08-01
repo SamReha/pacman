@@ -1,26 +1,12 @@
-
-//
-// Disclamer:
-// ----------
-//
-// This code will work only if you selected window, graphics and audio.
-//
-// Note that the "Run Script" build phase will copy the required frameworks
-// or dylibs to your application bundle so you can execute it on any OS X
-// computer.
-//
-// Your resource files (images, sounds, fonts, ...) are also copied to your
-// application bundle. To get the path to these resource, use the helper
-// method resourcePath() from ResourcePath.hpp
-//
-
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
-// Here is a small helper for you ! Have a look.
 #include "ResourcePath.hpp"
 #include "map.hpp"
-#include "ghost.hpp"
+#include "pinky.hpp"
+#include "blinky.hpp"
+#include "inky.hpp"
+#include "sue.hpp"
 
 const int TILE_WIDTH = 24;
 
@@ -1025,16 +1011,13 @@ int main(int, char const**)
   if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
     return EXIT_FAILURE;
   }
-
-  // Play the music
-  music.play();
   
   // Declare the ghosts!
-  // Restructure these such that each ghost type is it's own subclass of ghost. Switch-casing based on personality type would be ridiculous
-  //Ghost Pinky(sf::String("HOUSE"), sf::String(""));
-  //Ghost Blinky(sf::String("HOUSE"), sf::String(""));
-  //Ghost Inky(sf::String("HOUSE"), sf::String(""));
-  //Ghost Sue(sf::String("HOUSE"), sf::String(""));
+  //Pinky pinky(sf::Vector2<double>(0, 0), sf::String("HOME"));
+  Pinky pinky(sf::Vector2<double>(0, 0), sf::String("HOME"));
+  Blinky blinky(sf::Vector2<double>(0, 0), sf::String("HOME"));
+  Inky inky(sf::Vector2<double>(0, 0), sf::String("HOME"));
+  Sue sue(sf::Vector2<double>(0, 0), sf::String("HOME"));
   
   // Game variables
   // Variabes used to draw map
@@ -1042,6 +1025,9 @@ int main(int, char const**)
   sf::Vector2<int> mapSize;
   PacTile tempTile(floor, sf::String("FLOOR"));
   sf::Sprite tempSprite;
+  
+  // Play the music
+  music.play();
   
   // Start the game loop
   while (window.isOpen()) {

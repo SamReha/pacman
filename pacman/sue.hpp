@@ -1,5 +1,5 @@
 # include "ghost.hpp"
-class Pinky: public Ghost{
+class Sue: public Ghost{
 public:
   using Ghost::Ghost;
   void update();
