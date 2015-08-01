@@ -22,10 +22,12 @@
 #include "map.hpp"
 #include "ghost.hpp"
 
+const int TILE_WIDTH = 24;
+
 int main(int, char const**)
 {
   // Create the main window
-  sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+  sf::RenderWindow window(sf::VideoMode(TILE_WIDTH*28, TILE_WIDTH*30), "PAC MAN");
   
   // Set the Icon
   sf::Image icon;
@@ -33,86 +35,113 @@ int main(int, char const**)
     return EXIT_FAILURE;
   }
   window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
-  // Load a sprite to display
-  sf::Texture texture;
-  if (!texture.loadFromFile(resourcePath() + "cute_image.jpg")) {
-    return EXIT_FAILURE;
-  }
-  sf::Sprite sprite(texture);
   
-  // More importantly, let's build up a tileset.
+  // More importantly, let's build up a tileset. - could be cleaner if tileset was external module tha returned dictionary
   sf::Texture level_texture;
   if (!level_texture.loadFromFile(resourcePath() + "data/full_texture_x3.png")) {
     return EXIT_FAILURE;
   }
-  sf::Sprite top_left_corner(level_texture, sf::Rect<int>(0, 0, 24, 24));
+  sf::Sprite top_left_corner(level_texture, sf::Rect<int>(0, 0, TILE_WIDTH, TILE_WIDTH));
   PacTile tlc(top_left_corner, sf::String("WALL"));
   
   // These are the double-line left corners that appear within the maze
-  sf::Sprite lower_left_corner(level_texture, sf::Rect<int>(24*22, 9*24, 24, 24));
+  sf::Sprite lower_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*22, 9*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
   PacTile llc(lower_left_corner, sf::String("WALL"));
   
-  sf::Sprite inner_left_corner(level_texture, sf::Rect<int>(24*13, 0, 24, 24));
+  sf::Sprite inner_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*13, 0, TILE_WIDTH, TILE_WIDTH));
   PacTile ilc(inner_left_corner, sf::String("WALL"));
   
-  sf::Sprite box_top_left_corner(level_texture, sf::Rect<int>(24*2, 24*2, 24, 24));
+  sf::Sprite inner_left_bottom_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*0, TILE_WIDTH*24, TILE_WIDTH, TILE_WIDTH));
+  PacTile ilblc(inner_left_bottom_left_corner, sf::String("WALL"));
+  
+  sf::Sprite inner_right_bottom_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*27, TILE_WIDTH*24, TILE_WIDTH, TILE_WIDTH));
+  PacTile irbrc(inner_right_bottom_right_corner, sf::String("WALL"));
+  
+  sf::Sprite inner_left_top_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*0, TILE_WIDTH*25, TILE_WIDTH, TILE_WIDTH));
+  PacTile iltlc(inner_left_top_left_corner, sf::String("WALL"));
+  
+  sf::Sprite inner_right_top_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*27, TILE_WIDTH*25, TILE_WIDTH, TILE_WIDTH));
+  PacTile irtrc(inner_right_top_right_corner, sf::String("WALL"));
+  
+  sf::Sprite weird_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*5, TILE_WIDTH*13, TILE_WIDTH, TILE_WIDTH));
+  PacTile wlc(weird_left_corner, sf::String("WALL"));
+  
+  sf::Sprite box_top_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*2, TILE_WIDTH*2, TILE_WIDTH, TILE_WIDTH));
   PacTile btlc(box_top_left_corner, sf::String("WALL"));
 
-  sf::Sprite top_right_corner(level_texture, sf::Rect<int>(24*27, 0, 24, 24));
+  sf::Sprite top_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*27, 0, TILE_WIDTH, TILE_WIDTH));
   PacTile trc(top_right_corner, sf::String("WALL"));
   
   // These are the double-line right corners that appear within the maze
-  sf::Sprite lower_right_corner(level_texture, sf::Rect<int>(24*5, 9*24, 24, 24));
+  sf::Sprite lower_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*5, 9*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
   PacTile lrc(lower_right_corner, sf::String("WALL"));
   
-  sf::Sprite inner_right_corner(level_texture, sf::Rect<int>(24*14, 0, 24, 24));
+  sf::Sprite inner_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*14, 0, TILE_WIDTH, TILE_WIDTH));
   PacTile irc(inner_right_corner, sf::String("WALL"));
   
-  sf::Sprite box_top_right_corner(level_texture, sf::Rect<int>(24*5, 24*2, 24, 24));
+  sf::Sprite weird_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*22, TILE_WIDTH*13, TILE_WIDTH, TILE_WIDTH));
+  PacTile wrc(weird_right_corner, sf::String("WALL"));
+  
+  sf::Sprite box_top_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*5, TILE_WIDTH*2, TILE_WIDTH, TILE_WIDTH));
   PacTile btrc(box_top_right_corner, sf::String("WALL"));
 
-  sf::Sprite bottom_right_corner(level_texture, sf::Rect<int>(24*27, 9*24, 24, 24));
+  sf::Sprite bottom_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*27, 9*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
   PacTile brc(bottom_right_corner, sf::String("WALL"));
   
-  sf::Sprite box_bottom_right_corner(level_texture, sf::Rect<int>(24*5, 24*4, 24, 24));
+  sf::Sprite box_bottom_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*5, TILE_WIDTH*4, TILE_WIDTH, TILE_WIDTH));
   PacTile bbrc(box_bottom_right_corner, sf::String("WALL"));
 
-  sf::Sprite bottom_left_corner(level_texture, sf::Rect<int>(0, 9*24, 24, 24));
+  sf::Sprite bottom_left_corner(level_texture, sf::Rect<int>(0, 9*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
   PacTile blc(bottom_left_corner, sf::String("WALL"));
   
-  sf::Sprite box_bottom_left_corner(level_texture, sf::Rect<int>(24*2, 24*4, 24, 24));
+  sf::Sprite box_bottom_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*2, TILE_WIDTH*4, TILE_WIDTH, TILE_WIDTH));
   PacTile bblc(box_bottom_left_corner, sf::String("WALL"));
 
-  sf::Sprite top_edge(level_texture, sf::Rect<int>(48, 0, 24, 24));
+  sf::Sprite top_edge(level_texture, sf::Rect<int>(TILE_WIDTH*2, 0, TILE_WIDTH, TILE_WIDTH));
   PacTile te(top_edge, sf::String("WALL"));
   
-  sf::Sprite box_top(level_texture, sf::Rect<int>(24*4, 24*2, 24, 24));
+  sf::Sprite box_top(level_texture, sf::Rect<int>(TILE_WIDTH*4, TILE_WIDTH*2, TILE_WIDTH, TILE_WIDTH));
   PacTile bt(box_top, sf::String("WALL"));
 
-  sf::Sprite left_edge(level_texture, sf::Rect<int>(0, 32, 24, 24));
+  sf::Sprite left_edge(level_texture, sf::Rect<int>(0, TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
   PacTile le(left_edge, sf::String("WALL"));
   
-  sf::Sprite inner_left_edge(level_texture, sf::Rect<int>(24*14, 24, 24, 24));
+  sf::Sprite inner_left_edge(level_texture, sf::Rect<int>(TILE_WIDTH*14, TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
   PacTile ile(inner_left_edge, sf::String("WALL"));
 
-  sf::Sprite right_edge(level_texture, sf::Rect<int>(24*27, 24, 24, 24));
+  sf::Sprite right_edge(level_texture, sf::Rect<int>(TILE_WIDTH*27, TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
   PacTile re(right_edge, sf::String("WALL"));
   
-  sf::Sprite inner_right_edge(level_texture, sf::Rect<int>(24*13, 24, 24, 24));
+  sf::Sprite inner_right_edge(level_texture, sf::Rect<int>(TILE_WIDTH*13, TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
   PacTile ire(inner_right_edge, sf::String("WALL"));
 
-  sf::Sprite bottom_edge(level_texture, sf::Rect<int>(24, 9*24, 24, 24));
+  sf::Sprite bottom_edge(level_texture, sf::Rect<int>(TILE_WIDTH, 9*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
   PacTile be(bottom_edge, sf::String("WALL"));
   
-  sf::Sprite box_bottom(level_texture, sf::Rect<int>(24*4, 24*4, 24, 24));
+  sf::Sprite box_bottom(level_texture, sf::Rect<int>(TILE_WIDTH*4, TILE_WIDTH*4, TILE_WIDTH, TILE_WIDTH));
   PacTile bb(box_bottom, sf::String("WALL"));
+  
+  // House tiles!
+  sf::Sprite house_top_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*10, TILE_WIDTH*12, TILE_WIDTH, TILE_WIDTH));
+  PacTile htrc(house_top_right_corner, sf::String("WALL"));
+  
+  sf::Sprite house_bottom_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*17, TILE_WIDTH*16, TILE_WIDTH, TILE_WIDTH));
+  PacTile hbrc(house_bottom_right_corner, sf::String("WALL"));
+  
+  sf::Sprite house_top_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*17, TILE_WIDTH*12, TILE_WIDTH, TILE_WIDTH));
+  PacTile htlc(house_top_left_corner, sf::String("WALL"));
+  
+  sf::Sprite house_bottom_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*10, TILE_WIDTH*16, TILE_WIDTH, TILE_WIDTH));
+  PacTile hblc(house_bottom_left_corner, sf::String("WALL"));
+  
+  sf::Sprite door(level_texture, sf::Rect<int>(TILE_WIDTH*13, TILE_WIDTH*12, TILE_WIDTH, TILE_WIDTH));
+  PacTile d(door, sf::String("WALL"));
 
-  sf::Sprite floor(level_texture, sf::Rect<int>(30*24, 24, 32, 24));
+  sf::Sprite floor(level_texture, sf::Rect<int>(30*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
   PacTile f(floor, sf::String("FLOOR"));
   
-  // Load up the map!
-  Map map(sf::Vector2<double>(0, 0), sf::Vector2<int>(28, 10), 24);
+  // Load up the map! - this is also messy. Perhaps this should also be a module that returns a configured map?
+  Map map(sf::Vector2<double>(0, 0), sf::Vector2<int>(28, 30), TILE_WIDTH);
   map.setTile(sf::Vector2<int>(0, 0), &tlc);
   map.setTile(sf::Vector2<int>(1, 0), &te);
   map.setTile(sf::Vector2<int>(2, 0), &te);
@@ -403,6 +432,586 @@ int main(int, char const**)
   map.setTile(sf::Vector2<int>(26, 9), &be);
   map.setTile(sf::Vector2<int>(27, 9), &brc);
   
+  map.setTile(sf::Vector2<int>(0, 10), &f);
+  map.setTile(sf::Vector2<int>(1, 10), &f);
+  map.setTile(sf::Vector2<int>(2, 10), &f);
+  map.setTile(sf::Vector2<int>(3, 10), &f);
+  map.setTile(sf::Vector2<int>(4, 10), &f);
+  map.setTile(sf::Vector2<int>(5, 10), &le);
+  map.setTile(sf::Vector2<int>(6, 10), &f);
+  map.setTile(sf::Vector2<int>(7, 10), &ire);
+  map.setTile(sf::Vector2<int>(8, 10), &btlc);
+  map.setTile(sf::Vector2<int>(9, 10), &bt);
+  map.setTile(sf::Vector2<int>(10, 10), &bt);
+  map.setTile(sf::Vector2<int>(11, 10), &bbrc);
+  map.setTile(sf::Vector2<int>(12, 10), &f);
+  map.setTile(sf::Vector2<int>(13, 10), &bblc);
+  map.setTile(sf::Vector2<int>(14, 10), &bbrc);
+  map.setTile(sf::Vector2<int>(15, 10), &f);
+  map.setTile(sf::Vector2<int>(16, 10), &bblc);
+  map.setTile(sf::Vector2<int>(17, 10), &bt);
+  map.setTile(sf::Vector2<int>(18, 10), &bt);
+  map.setTile(sf::Vector2<int>(19, 10), &btrc);
+  map.setTile(sf::Vector2<int>(20, 10), &ile);
+  map.setTile(sf::Vector2<int>(21, 10), &f);
+  map.setTile(sf::Vector2<int>(22, 10), &re);
+  map.setTile(sf::Vector2<int>(23, 10), &f);
+  map.setTile(sf::Vector2<int>(24, 10), &f);
+  map.setTile(sf::Vector2<int>(25, 10), &f);
+  map.setTile(sf::Vector2<int>(26, 10), &f);
+  map.setTile(sf::Vector2<int>(27, 10), &f);
+  
+  map.setTile(sf::Vector2<int>(0, 11), &f);
+  map.setTile(sf::Vector2<int>(1, 11), &f);
+  map.setTile(sf::Vector2<int>(2, 11), &f);
+  map.setTile(sf::Vector2<int>(3, 11), &f);
+  map.setTile(sf::Vector2<int>(4, 11), &f);
+  map.setTile(sf::Vector2<int>(5, 11), &le);
+  map.setTile(sf::Vector2<int>(6, 11), &f);
+  map.setTile(sf::Vector2<int>(7, 11), &ire);
+  map.setTile(sf::Vector2<int>(8, 11), &ile);
+  map.setTile(sf::Vector2<int>(9, 11), &f);
+  map.setTile(sf::Vector2<int>(10, 11), &f);
+  map.setTile(sf::Vector2<int>(11, 11), &f);
+  map.setTile(sf::Vector2<int>(12, 11), &f);
+  map.setTile(sf::Vector2<int>(13, 11), &f);
+  map.setTile(sf::Vector2<int>(14, 11), &f);
+  map.setTile(sf::Vector2<int>(15, 11), &f);
+  map.setTile(sf::Vector2<int>(16, 11), &f);
+  map.setTile(sf::Vector2<int>(17, 11), &f);
+  map.setTile(sf::Vector2<int>(18, 11), &f);
+  map.setTile(sf::Vector2<int>(19, 11), &ire);
+  map.setTile(sf::Vector2<int>(20, 11), &ile);
+  map.setTile(sf::Vector2<int>(21, 11), &f);
+  map.setTile(sf::Vector2<int>(22, 11), &re);
+  map.setTile(sf::Vector2<int>(23, 11), &f);
+  map.setTile(sf::Vector2<int>(24, 11), &f);
+  map.setTile(sf::Vector2<int>(25, 11), &f);
+  map.setTile(sf::Vector2<int>(26, 11), &f);
+  map.setTile(sf::Vector2<int>(27, 11), &f);
+  
+  map.setTile(sf::Vector2<int>(0, 12), &f);
+  map.setTile(sf::Vector2<int>(1, 12), &f);
+  map.setTile(sf::Vector2<int>(2, 12), &f);
+  map.setTile(sf::Vector2<int>(3, 12), &f);
+  map.setTile(sf::Vector2<int>(4, 12), &f);
+  map.setTile(sf::Vector2<int>(5, 12), &le);
+  map.setTile(sf::Vector2<int>(6, 12), &f);
+  map.setTile(sf::Vector2<int>(7, 12), &ire);
+  map.setTile(sf::Vector2<int>(8, 12), &ile);
+  map.setTile(sf::Vector2<int>(9, 12), &f);
+  map.setTile(sf::Vector2<int>(10, 12), &htrc);
+  map.setTile(sf::Vector2<int>(11, 12), &be);
+  map.setTile(sf::Vector2<int>(12, 12), &be);
+  map.setTile(sf::Vector2<int>(13, 12), &d);
+  map.setTile(sf::Vector2<int>(14, 12), &d);
+  map.setTile(sf::Vector2<int>(15, 12), &be);
+  map.setTile(sf::Vector2<int>(16, 12), &be);
+  map.setTile(sf::Vector2<int>(17, 12), &htlc);
+  map.setTile(sf::Vector2<int>(18, 12), &f);
+  map.setTile(sf::Vector2<int>(19, 12), &ire);
+  map.setTile(sf::Vector2<int>(20, 12), &ile);
+  map.setTile(sf::Vector2<int>(21, 12), &f);
+  map.setTile(sf::Vector2<int>(22, 12), &re);
+  map.setTile(sf::Vector2<int>(23, 12), &f);
+  map.setTile(sf::Vector2<int>(24, 12), &f);
+  map.setTile(sf::Vector2<int>(25, 12), &f);
+  map.setTile(sf::Vector2<int>(26, 12), &f);
+  map.setTile(sf::Vector2<int>(27, 12), &f);
+  
+  map.setTile(sf::Vector2<int>(0, 13), &te);
+  map.setTile(sf::Vector2<int>(1, 13), &te);
+  map.setTile(sf::Vector2<int>(2, 13), &te);
+  map.setTile(sf::Vector2<int>(3, 13), &te);
+  map.setTile(sf::Vector2<int>(4, 13), &te);
+  map.setTile(sf::Vector2<int>(5, 13), &wlc);
+  map.setTile(sf::Vector2<int>(6, 13), &f);
+  map.setTile(sf::Vector2<int>(7, 13), &bblc);
+  map.setTile(sf::Vector2<int>(8, 13), &bbrc);
+  map.setTile(sf::Vector2<int>(9, 13), &f);
+  map.setTile(sf::Vector2<int>(10, 13), &re);
+  map.setTile(sf::Vector2<int>(11, 13), &f);
+  map.setTile(sf::Vector2<int>(12, 13), &f);
+  map.setTile(sf::Vector2<int>(13, 13), &f);
+  map.setTile(sf::Vector2<int>(14, 13), &f);
+  map.setTile(sf::Vector2<int>(15, 13), &f);
+  map.setTile(sf::Vector2<int>(16, 13), &f);
+  map.setTile(sf::Vector2<int>(17, 13), &le);
+  map.setTile(sf::Vector2<int>(18, 13), &f);
+  map.setTile(sf::Vector2<int>(19, 13), &bblc);
+  map.setTile(sf::Vector2<int>(20, 13), &bbrc);
+  map.setTile(sf::Vector2<int>(21, 13), &f);
+  map.setTile(sf::Vector2<int>(22, 13), &wrc);
+  map.setTile(sf::Vector2<int>(23, 13), &te);
+  map.setTile(sf::Vector2<int>(24, 13), &te);
+  map.setTile(sf::Vector2<int>(25, 13), &te);
+  map.setTile(sf::Vector2<int>(26, 13), &te);
+  map.setTile(sf::Vector2<int>(27, 13), &te);
+  
+  map.setTile(sf::Vector2<int>(0, 14), &f);
+  map.setTile(sf::Vector2<int>(1, 14), &f);
+  map.setTile(sf::Vector2<int>(2, 14), &f);
+  map.setTile(sf::Vector2<int>(3, 14), &f);
+  map.setTile(sf::Vector2<int>(4, 14), &f);
+  map.setTile(sf::Vector2<int>(5, 14), &f);
+  map.setTile(sf::Vector2<int>(6, 14), &f);
+  map.setTile(sf::Vector2<int>(7, 14), &f);
+  map.setTile(sf::Vector2<int>(8, 14), &f);
+  map.setTile(sf::Vector2<int>(9, 14), &f);
+  map.setTile(sf::Vector2<int>(10, 14), &re);
+  map.setTile(sf::Vector2<int>(11, 14), &f);
+  map.setTile(sf::Vector2<int>(12, 14), &f);
+  map.setTile(sf::Vector2<int>(13, 14), &f);
+  map.setTile(sf::Vector2<int>(14, 14), &f);
+  map.setTile(sf::Vector2<int>(15, 14), &f);
+  map.setTile(sf::Vector2<int>(16, 14), &f);
+  map.setTile(sf::Vector2<int>(17, 14), &le);
+  map.setTile(sf::Vector2<int>(18, 14), &f);
+  map.setTile(sf::Vector2<int>(19, 14), &f);
+  map.setTile(sf::Vector2<int>(20, 14), &f);
+  map.setTile(sf::Vector2<int>(21, 14), &f);
+  map.setTile(sf::Vector2<int>(22, 14), &f);
+  map.setTile(sf::Vector2<int>(23, 14), &f);
+  map.setTile(sf::Vector2<int>(24, 14), &f);
+  map.setTile(sf::Vector2<int>(25, 14), &f);
+  map.setTile(sf::Vector2<int>(26, 14), &f);
+  map.setTile(sf::Vector2<int>(27, 14), &f);
+  
+  map.setTile(sf::Vector2<int>(0, 15), &be);
+  map.setTile(sf::Vector2<int>(1, 15), &be);
+  map.setTile(sf::Vector2<int>(2, 15), &be);
+  map.setTile(sf::Vector2<int>(3, 15), &be);
+  map.setTile(sf::Vector2<int>(4, 15), &be);
+  map.setTile(sf::Vector2<int>(5, 15), &lrc);
+  map.setTile(sf::Vector2<int>(6, 15), &f);
+  map.setTile(sf::Vector2<int>(7, 15), &btlc);
+  map.setTile(sf::Vector2<int>(8, 15), &btrc);
+  map.setTile(sf::Vector2<int>(9, 15), &f);
+  map.setTile(sf::Vector2<int>(10, 15), &re);
+  map.setTile(sf::Vector2<int>(11, 15), &f);
+  map.setTile(sf::Vector2<int>(12, 15), &f);
+  map.setTile(sf::Vector2<int>(13, 15), &f);
+  map.setTile(sf::Vector2<int>(14, 15), &f);
+  map.setTile(sf::Vector2<int>(15, 15), &f);
+  map.setTile(sf::Vector2<int>(16, 15), &f);
+  map.setTile(sf::Vector2<int>(17, 15), &le);
+  map.setTile(sf::Vector2<int>(18, 15), &f);
+  map.setTile(sf::Vector2<int>(19, 15), &btlc);
+  map.setTile(sf::Vector2<int>(20, 15), &btrc);
+  map.setTile(sf::Vector2<int>(21, 15), &f);
+  map.setTile(sf::Vector2<int>(22, 15), &llc);
+  map.setTile(sf::Vector2<int>(23, 15), &be);
+  map.setTile(sf::Vector2<int>(24, 15), &be);
+  map.setTile(sf::Vector2<int>(25, 15), &be);
+  map.setTile(sf::Vector2<int>(26, 15), &be);
+  map.setTile(sf::Vector2<int>(27, 15), &be);
+  
+  map.setTile(sf::Vector2<int>(0, 16), &f);
+  map.setTile(sf::Vector2<int>(1, 16), &f);
+  map.setTile(sf::Vector2<int>(2, 16), &f);
+  map.setTile(sf::Vector2<int>(3, 16), &f);
+  map.setTile(sf::Vector2<int>(4, 16), &f);
+  map.setTile(sf::Vector2<int>(5, 16), &le);
+  map.setTile(sf::Vector2<int>(6, 16), &f);
+  map.setTile(sf::Vector2<int>(7, 16), &ire);
+  map.setTile(sf::Vector2<int>(8, 16), &ile);
+  map.setTile(sf::Vector2<int>(9, 16), &f);
+  map.setTile(sf::Vector2<int>(10, 16), &hblc);
+  map.setTile(sf::Vector2<int>(11, 16), &te);
+  map.setTile(sf::Vector2<int>(12, 16), &te);
+  map.setTile(sf::Vector2<int>(13, 16), &te);
+  map.setTile(sf::Vector2<int>(14, 16), &te);
+  map.setTile(sf::Vector2<int>(15, 16), &te);
+  map.setTile(sf::Vector2<int>(16, 16), &te);
+  map.setTile(sf::Vector2<int>(17, 16), &hbrc);
+  map.setTile(sf::Vector2<int>(18, 16), &f);
+  map.setTile(sf::Vector2<int>(19, 16), &ire);
+  map.setTile(sf::Vector2<int>(20, 16), &ile);
+  map.setTile(sf::Vector2<int>(21, 16), &f);
+  map.setTile(sf::Vector2<int>(22, 16), &re);
+  map.setTile(sf::Vector2<int>(23, 16), &f);
+  map.setTile(sf::Vector2<int>(24, 16), &f);
+  map.setTile(sf::Vector2<int>(25, 16), &f);
+  map.setTile(sf::Vector2<int>(26, 16), &f);
+  map.setTile(sf::Vector2<int>(27, 16), &f);
+  
+  map.setTile(sf::Vector2<int>(0, 17), &f);
+  map.setTile(sf::Vector2<int>(1, 17), &f);
+  map.setTile(sf::Vector2<int>(2, 17), &f);
+  map.setTile(sf::Vector2<int>(3, 17), &f);
+  map.setTile(sf::Vector2<int>(4, 17), &f);
+  map.setTile(sf::Vector2<int>(5, 17), &le);
+  map.setTile(sf::Vector2<int>(6, 17), &f);
+  map.setTile(sf::Vector2<int>(7, 17), &ire);
+  map.setTile(sf::Vector2<int>(8, 17), &ile);
+  map.setTile(sf::Vector2<int>(9, 17), &f);
+  map.setTile(sf::Vector2<int>(10, 17), &f);
+  map.setTile(sf::Vector2<int>(11, 17), &f);
+  map.setTile(sf::Vector2<int>(12, 17), &f);
+  map.setTile(sf::Vector2<int>(13, 17), &f);
+  map.setTile(sf::Vector2<int>(14, 17), &f);
+  map.setTile(sf::Vector2<int>(15, 17), &f);
+  map.setTile(sf::Vector2<int>(16, 17), &f);
+  map.setTile(sf::Vector2<int>(17, 17), &f);
+  map.setTile(sf::Vector2<int>(18, 17), &f);
+  map.setTile(sf::Vector2<int>(19, 17), &ire);
+  map.setTile(sf::Vector2<int>(20, 17), &ile);
+  map.setTile(sf::Vector2<int>(21, 17), &f);
+  map.setTile(sf::Vector2<int>(22, 17), &re);
+  map.setTile(sf::Vector2<int>(23, 17), &f);
+  map.setTile(sf::Vector2<int>(24, 17), &f);
+  map.setTile(sf::Vector2<int>(25, 17), &f);
+  map.setTile(sf::Vector2<int>(26, 17), &f);
+  map.setTile(sf::Vector2<int>(27, 17), &f);
+  
+  map.setTile(sf::Vector2<int>(0, 18), &f);
+  map.setTile(sf::Vector2<int>(1, 18), &f);
+  map.setTile(sf::Vector2<int>(2, 18), &f);
+  map.setTile(sf::Vector2<int>(3, 18), &f);
+  map.setTile(sf::Vector2<int>(4, 18), &f);
+  map.setTile(sf::Vector2<int>(5, 18), &le);
+  map.setTile(sf::Vector2<int>(6, 18), &f);
+  map.setTile(sf::Vector2<int>(7, 18), &ire);
+  map.setTile(sf::Vector2<int>(8, 18), &ile);
+  map.setTile(sf::Vector2<int>(9, 18), &f);
+  map.setTile(sf::Vector2<int>(10, 18), &btlc);
+  map.setTile(sf::Vector2<int>(11, 18), &bt);
+  map.setTile(sf::Vector2<int>(12, 18), &bt);
+  map.setTile(sf::Vector2<int>(13, 18), &bt);
+  map.setTile(sf::Vector2<int>(14, 18), &bt);
+  map.setTile(sf::Vector2<int>(15, 18), &bt);
+  map.setTile(sf::Vector2<int>(16, 18), &bt);
+  map.setTile(sf::Vector2<int>(17, 18), &btrc);
+  map.setTile(sf::Vector2<int>(18, 18), &f);
+  map.setTile(sf::Vector2<int>(19, 18), &ire);
+  map.setTile(sf::Vector2<int>(20, 18), &ile);
+  map.setTile(sf::Vector2<int>(21, 18), &f);
+  map.setTile(sf::Vector2<int>(22, 18), &re);
+  map.setTile(sf::Vector2<int>(23, 18), &f);
+  map.setTile(sf::Vector2<int>(24, 18), &f);
+  map.setTile(sf::Vector2<int>(25, 18), &f);
+  map.setTile(sf::Vector2<int>(26, 18), &f);
+  map.setTile(sf::Vector2<int>(27, 18), &f);
+  
+  map.setTile(sf::Vector2<int>(0, 19), &tlc);
+  map.setTile(sf::Vector2<int>(1, 19), &te);
+  map.setTile(sf::Vector2<int>(2, 19), &te);
+  map.setTile(sf::Vector2<int>(3, 19), &te);
+  map.setTile(sf::Vector2<int>(4, 19), &te);
+  map.setTile(sf::Vector2<int>(5, 19), &bbrc);
+  map.setTile(sf::Vector2<int>(6, 19), &f);
+  map.setTile(sf::Vector2<int>(7, 19), &bblc);
+  map.setTile(sf::Vector2<int>(8, 19), &bbrc);
+  map.setTile(sf::Vector2<int>(9, 19), &f);
+  map.setTile(sf::Vector2<int>(10, 19), &bblc);
+  map.setTile(sf::Vector2<int>(11, 19), &bb);
+  map.setTile(sf::Vector2<int>(12, 19), &bb);
+  map.setTile(sf::Vector2<int>(13, 19), &btrc);
+  map.setTile(sf::Vector2<int>(14, 19), &btlc);
+  map.setTile(sf::Vector2<int>(15, 19), &bb);
+  map.setTile(sf::Vector2<int>(16, 19), &bb);
+  map.setTile(sf::Vector2<int>(17, 19), &bbrc);
+  map.setTile(sf::Vector2<int>(18, 19), &f);
+  map.setTile(sf::Vector2<int>(19, 19), &bblc);
+  map.setTile(sf::Vector2<int>(20, 19), &bbrc);
+  map.setTile(sf::Vector2<int>(21, 19), &f);
+  map.setTile(sf::Vector2<int>(22, 19), &bblc);
+  map.setTile(sf::Vector2<int>(23, 19), &te);
+  map.setTile(sf::Vector2<int>(24, 19), &te);
+  map.setTile(sf::Vector2<int>(25, 19), &te);
+  map.setTile(sf::Vector2<int>(26, 19), &te);
+  map.setTile(sf::Vector2<int>(27, 19), &trc);
+  
+  map.setTile(sf::Vector2<int>(0, 20), &le);
+  map.setTile(sf::Vector2<int>(1, 20), &f);
+  map.setTile(sf::Vector2<int>(2, 20), &f);
+  map.setTile(sf::Vector2<int>(3, 20), &f);
+  map.setTile(sf::Vector2<int>(4, 20), &f);
+  map.setTile(sf::Vector2<int>(5, 20), &f);
+  map.setTile(sf::Vector2<int>(6, 20), &f);
+  map.setTile(sf::Vector2<int>(7, 20), &f);
+  map.setTile(sf::Vector2<int>(8, 20), &f);
+  map.setTile(sf::Vector2<int>(9, 20), &f);
+  map.setTile(sf::Vector2<int>(10, 20), &f);
+  map.setTile(sf::Vector2<int>(11, 20), &f);
+  map.setTile(sf::Vector2<int>(12, 20), &f);
+  map.setTile(sf::Vector2<int>(13, 20), &ire);
+  map.setTile(sf::Vector2<int>(14, 20), &ile);
+  map.setTile(sf::Vector2<int>(15, 20), &f);
+  map.setTile(sf::Vector2<int>(16, 20), &f);
+  map.setTile(sf::Vector2<int>(17, 20), &f);
+  map.setTile(sf::Vector2<int>(18, 20), &f);
+  map.setTile(sf::Vector2<int>(19, 20), &f);
+  map.setTile(sf::Vector2<int>(20, 20), &f);
+  map.setTile(sf::Vector2<int>(21, 20), &f);
+  map.setTile(sf::Vector2<int>(22, 20), &f);
+  map.setTile(sf::Vector2<int>(23, 20), &f);
+  map.setTile(sf::Vector2<int>(24, 20), &f);
+  map.setTile(sf::Vector2<int>(25, 20), &f);
+  map.setTile(sf::Vector2<int>(26, 20), &f);
+  map.setTile(sf::Vector2<int>(27, 20), &re);
+  
+  map.setTile(sf::Vector2<int>(0, 21), &le);
+  map.setTile(sf::Vector2<int>(1, 21), &f);
+  map.setTile(sf::Vector2<int>(2, 21), &btlc);
+  map.setTile(sf::Vector2<int>(3, 21), &bt);
+  map.setTile(sf::Vector2<int>(4, 21), &bt);
+  map.setTile(sf::Vector2<int>(5, 21), &btrc);
+  map.setTile(sf::Vector2<int>(6, 21), &f);
+  map.setTile(sf::Vector2<int>(7, 21), &btlc);
+  map.setTile(sf::Vector2<int>(8, 21), &bt);
+  map.setTile(sf::Vector2<int>(9, 21), &bt);
+  map.setTile(sf::Vector2<int>(10, 21), &bt);
+  map.setTile(sf::Vector2<int>(11, 21), &btrc);
+  map.setTile(sf::Vector2<int>(12, 21), &f);
+  map.setTile(sf::Vector2<int>(13, 21), &ire);
+  map.setTile(sf::Vector2<int>(14, 21), &ile);
+  map.setTile(sf::Vector2<int>(15, 21), &f);
+  map.setTile(sf::Vector2<int>(16, 21), &btlc);
+  map.setTile(sf::Vector2<int>(17, 21), &bt);
+  map.setTile(sf::Vector2<int>(18, 21), &bt);
+  map.setTile(sf::Vector2<int>(19, 21), &bt);
+  map.setTile(sf::Vector2<int>(20, 21), &btrc);
+  map.setTile(sf::Vector2<int>(21, 21), &f);
+  map.setTile(sf::Vector2<int>(22, 21), &btlc);
+  map.setTile(sf::Vector2<int>(23, 21), &bt);
+  map.setTile(sf::Vector2<int>(24, 21), &bt);
+  map.setTile(sf::Vector2<int>(25, 21), &btrc);
+  map.setTile(sf::Vector2<int>(26, 21), &f);
+  map.setTile(sf::Vector2<int>(27, 21), &re);
+  
+  map.setTile(sf::Vector2<int>(0, 22), &le);
+  map.setTile(sf::Vector2<int>(1, 22), &f);
+  map.setTile(sf::Vector2<int>(2, 22), &bblc);
+  map.setTile(sf::Vector2<int>(3, 22), &bb);
+  map.setTile(sf::Vector2<int>(4, 22), &btrc);
+  map.setTile(sf::Vector2<int>(5, 22), &ile);
+  map.setTile(sf::Vector2<int>(6, 22), &f);
+  map.setTile(sf::Vector2<int>(7, 22), &bblc);
+  map.setTile(sf::Vector2<int>(8, 22), &bb);
+  map.setTile(sf::Vector2<int>(9, 22), &bb);
+  map.setTile(sf::Vector2<int>(10, 22), &bb);
+  map.setTile(sf::Vector2<int>(11, 22), &bbrc);
+  map.setTile(sf::Vector2<int>(12, 22), &f);
+  map.setTile(sf::Vector2<int>(13, 22), &bblc);
+  map.setTile(sf::Vector2<int>(14, 22), &bbrc);
+  map.setTile(sf::Vector2<int>(15, 22), &f);
+  map.setTile(sf::Vector2<int>(16, 22), &bblc);
+  map.setTile(sf::Vector2<int>(17, 22), &bb);
+  map.setTile(sf::Vector2<int>(18, 22), &bb);
+  map.setTile(sf::Vector2<int>(19, 22), &bb);
+  map.setTile(sf::Vector2<int>(20, 22), &bbrc);
+  map.setTile(sf::Vector2<int>(21, 22), &f);
+  map.setTile(sf::Vector2<int>(22, 22), &ire);
+  map.setTile(sf::Vector2<int>(23, 22), &btlc);
+  map.setTile(sf::Vector2<int>(24, 22), &bb);
+  map.setTile(sf::Vector2<int>(25, 22), &bbrc);
+  map.setTile(sf::Vector2<int>(26, 22), &f);
+  map.setTile(sf::Vector2<int>(27, 22), &re);
+  
+  map.setTile(sf::Vector2<int>(0, 23), &le);
+  map.setTile(sf::Vector2<int>(1, 23), &f);
+  map.setTile(sf::Vector2<int>(2, 23), &f);
+  map.setTile(sf::Vector2<int>(3, 23), &f);
+  map.setTile(sf::Vector2<int>(4, 23), &ire);
+  map.setTile(sf::Vector2<int>(5, 23), &ile);
+  map.setTile(sf::Vector2<int>(6, 23), &f);
+  map.setTile(sf::Vector2<int>(7, 23), &f);
+  map.setTile(sf::Vector2<int>(8, 23), &f);
+  map.setTile(sf::Vector2<int>(9, 23), &f);
+  map.setTile(sf::Vector2<int>(10, 23), &f);
+  map.setTile(sf::Vector2<int>(11, 23), &f);
+  map.setTile(sf::Vector2<int>(12, 23), &f);
+  map.setTile(sf::Vector2<int>(13, 23), &f);
+  map.setTile(sf::Vector2<int>(14, 23), &f);
+  map.setTile(sf::Vector2<int>(15, 23), &f);
+  map.setTile(sf::Vector2<int>(16, 23), &f);
+  map.setTile(sf::Vector2<int>(17, 23), &f);
+  map.setTile(sf::Vector2<int>(18, 23), &f);
+  map.setTile(sf::Vector2<int>(19, 23), &f);
+  map.setTile(sf::Vector2<int>(20, 23), &f);
+  map.setTile(sf::Vector2<int>(21, 23), &f);
+  map.setTile(sf::Vector2<int>(22, 23), &ire);
+  map.setTile(sf::Vector2<int>(23, 23), &ile);
+  map.setTile(sf::Vector2<int>(24, 23), &f);
+  map.setTile(sf::Vector2<int>(25, 23), &f);
+  map.setTile(sf::Vector2<int>(26, 23), &f);
+  map.setTile(sf::Vector2<int>(27, 23), &re);
+  
+  map.setTile(sf::Vector2<int>(0, 24), &ilblc);
+  map.setTile(sf::Vector2<int>(1, 24), &bt);
+  map.setTile(sf::Vector2<int>(2, 24), &btrc);
+  map.setTile(sf::Vector2<int>(3, 24), &f);
+  map.setTile(sf::Vector2<int>(4, 24), &ire);
+  map.setTile(sf::Vector2<int>(5, 24), &ile);
+  map.setTile(sf::Vector2<int>(6, 24), &f);
+  map.setTile(sf::Vector2<int>(7, 24), &btlc);
+  map.setTile(sf::Vector2<int>(8, 24), &btrc);
+  map.setTile(sf::Vector2<int>(9, 24), &f);
+  map.setTile(sf::Vector2<int>(10, 24), &btlc);
+  map.setTile(sf::Vector2<int>(11, 24), &bt);
+  map.setTile(sf::Vector2<int>(12, 24), &bt);
+  map.setTile(sf::Vector2<int>(13, 24), &bt);
+  map.setTile(sf::Vector2<int>(14, 24), &bt);
+  map.setTile(sf::Vector2<int>(15, 24), &bt);
+  map.setTile(sf::Vector2<int>(16, 24), &bt);
+  map.setTile(sf::Vector2<int>(17, 24), &btrc);
+  map.setTile(sf::Vector2<int>(18, 24), &f);
+  map.setTile(sf::Vector2<int>(19, 24), &btlc);
+  map.setTile(sf::Vector2<int>(20, 24), &btrc);
+  map.setTile(sf::Vector2<int>(21, 24), &f);
+  map.setTile(sf::Vector2<int>(22, 24), &ire);
+  map.setTile(sf::Vector2<int>(23, 24), &ile);
+  map.setTile(sf::Vector2<int>(24, 24), &f);
+  map.setTile(sf::Vector2<int>(25, 24), &btlc);
+  map.setTile(sf::Vector2<int>(26, 24), &bt);
+  map.setTile(sf::Vector2<int>(27, 24), &irbrc);
+  
+  map.setTile(sf::Vector2<int>(0, 25), &iltlc);
+  map.setTile(sf::Vector2<int>(1, 25), &bb);
+  map.setTile(sf::Vector2<int>(2, 25), &bbrc);
+  map.setTile(sf::Vector2<int>(3, 25), &f);
+  map.setTile(sf::Vector2<int>(4, 25), &bblc);
+  map.setTile(sf::Vector2<int>(5, 25), &bbrc);
+  map.setTile(sf::Vector2<int>(6, 25), &f);
+  map.setTile(sf::Vector2<int>(7, 25), &ire);
+  map.setTile(sf::Vector2<int>(8, 25), &ile);
+  map.setTile(sf::Vector2<int>(9, 25), &f);
+  map.setTile(sf::Vector2<int>(10, 25), &bblc);
+  map.setTile(sf::Vector2<int>(11, 25), &bb);
+  map.setTile(sf::Vector2<int>(12, 25), &bb);
+  map.setTile(sf::Vector2<int>(13, 25), &btrc);
+  map.setTile(sf::Vector2<int>(14, 25), &btlc);
+  map.setTile(sf::Vector2<int>(15, 25), &bb);
+  map.setTile(sf::Vector2<int>(16, 25), &bb);
+  map.setTile(sf::Vector2<int>(17, 25), &bbrc);
+  map.setTile(sf::Vector2<int>(18, 25), &f);
+  map.setTile(sf::Vector2<int>(19, 25), &ire);
+  map.setTile(sf::Vector2<int>(20, 25), &ile);
+  map.setTile(sf::Vector2<int>(21, 25), &f);
+  map.setTile(sf::Vector2<int>(22, 25), &bblc);
+  map.setTile(sf::Vector2<int>(23, 25), &bbrc);
+  map.setTile(sf::Vector2<int>(24, 25), &f);
+  map.setTile(sf::Vector2<int>(25, 25), &bblc);
+  map.setTile(sf::Vector2<int>(26, 25), &bb);
+  map.setTile(sf::Vector2<int>(27, 25), &irtrc);
+  
+  map.setTile(sf::Vector2<int>(0, 26), &le);
+  map.setTile(sf::Vector2<int>(1, 26), &f);
+  map.setTile(sf::Vector2<int>(2, 26), &f);
+  map.setTile(sf::Vector2<int>(3, 26), &f);
+  map.setTile(sf::Vector2<int>(4, 26), &f);
+  map.setTile(sf::Vector2<int>(5, 26), &f);
+  map.setTile(sf::Vector2<int>(6, 26), &f);
+  map.setTile(sf::Vector2<int>(7, 26), &ire);
+  map.setTile(sf::Vector2<int>(8, 26), &ile);
+  map.setTile(sf::Vector2<int>(9, 26), &f);
+  map.setTile(sf::Vector2<int>(10, 26), &f);
+  map.setTile(sf::Vector2<int>(11, 26), &f);
+  map.setTile(sf::Vector2<int>(12, 26), &f);
+  map.setTile(sf::Vector2<int>(13, 26), &ire);
+  map.setTile(sf::Vector2<int>(14, 26), &ile);
+  map.setTile(sf::Vector2<int>(15, 26), &f);
+  map.setTile(sf::Vector2<int>(16, 26), &f);
+  map.setTile(sf::Vector2<int>(17, 26), &f);
+  map.setTile(sf::Vector2<int>(18, 26), &f);
+  map.setTile(sf::Vector2<int>(19, 26), &ire);
+  map.setTile(sf::Vector2<int>(20, 26), &ile);
+  map.setTile(sf::Vector2<int>(21, 26), &f);
+  map.setTile(sf::Vector2<int>(22, 26), &f);
+  map.setTile(sf::Vector2<int>(23, 26), &f);
+  map.setTile(sf::Vector2<int>(24, 26), &f);
+  map.setTile(sf::Vector2<int>(25, 26), &f);
+  map.setTile(sf::Vector2<int>(26, 26), &f);
+  map.setTile(sf::Vector2<int>(27, 26), &re);
+  
+  map.setTile(sf::Vector2<int>(0, 27), &le);
+  map.setTile(sf::Vector2<int>(1, 27), &f);
+  map.setTile(sf::Vector2<int>(2, 27), &btlc);
+  map.setTile(sf::Vector2<int>(3, 27), &bt);
+  map.setTile(sf::Vector2<int>(4, 27), &bt);
+  map.setTile(sf::Vector2<int>(5, 27), &bt);
+  map.setTile(sf::Vector2<int>(6, 27), &bt);
+  map.setTile(sf::Vector2<int>(7, 27), &bbrc);
+  map.setTile(sf::Vector2<int>(8, 27), &bblc);
+  map.setTile(sf::Vector2<int>(9, 27), &bt);
+  map.setTile(sf::Vector2<int>(10, 27), &bt);
+  map.setTile(sf::Vector2<int>(11, 27), &btrc);
+  map.setTile(sf::Vector2<int>(12, 27), &f);
+  map.setTile(sf::Vector2<int>(13, 27), &ire);
+  map.setTile(sf::Vector2<int>(14, 27), &ile);
+  map.setTile(sf::Vector2<int>(15, 27), &f);
+  map.setTile(sf::Vector2<int>(16, 27), &btlc);
+  map.setTile(sf::Vector2<int>(17, 27), &bt);
+  map.setTile(sf::Vector2<int>(18, 27), &bt);
+  map.setTile(sf::Vector2<int>(19, 27), &bbrc);
+  map.setTile(sf::Vector2<int>(20, 27), &bblc);
+  map.setTile(sf::Vector2<int>(21, 27), &bt);
+  map.setTile(sf::Vector2<int>(22, 27), &bt);
+  map.setTile(sf::Vector2<int>(23, 27), &bt);
+  map.setTile(sf::Vector2<int>(24, 27), &bt);
+  map.setTile(sf::Vector2<int>(25, 27), &btrc);
+  map.setTile(sf::Vector2<int>(26, 27), &f);
+  map.setTile(sf::Vector2<int>(27, 27), &re);
+  
+  map.setTile(sf::Vector2<int>(0, 28), &le);
+  map.setTile(sf::Vector2<int>(1, 28), &f);
+  map.setTile(sf::Vector2<int>(2, 28), &bblc);
+  map.setTile(sf::Vector2<int>(3, 28), &bb);
+  map.setTile(sf::Vector2<int>(4, 28), &bb);
+  map.setTile(sf::Vector2<int>(5, 28), &bb);
+  map.setTile(sf::Vector2<int>(6, 28), &bb);
+  map.setTile(sf::Vector2<int>(7, 28), &bb);
+  map.setTile(sf::Vector2<int>(8, 28), &bb);
+  map.setTile(sf::Vector2<int>(9, 28), &bb);
+  map.setTile(sf::Vector2<int>(10, 28), &bb);
+  map.setTile(sf::Vector2<int>(11, 28), &bbrc);
+  map.setTile(sf::Vector2<int>(12, 28), &f);
+  map.setTile(sf::Vector2<int>(13, 28), &bblc);
+  map.setTile(sf::Vector2<int>(14, 28), &bbrc);
+  map.setTile(sf::Vector2<int>(15, 28), &f);
+  map.setTile(sf::Vector2<int>(16, 28), &bblc);
+  map.setTile(sf::Vector2<int>(17, 28), &bb);
+  map.setTile(sf::Vector2<int>(18, 28), &bb);
+  map.setTile(sf::Vector2<int>(19, 28), &bb);
+  map.setTile(sf::Vector2<int>(20, 28), &bb);
+  map.setTile(sf::Vector2<int>(21, 28), &bb);
+  map.setTile(sf::Vector2<int>(22, 28), &bb);
+  map.setTile(sf::Vector2<int>(23, 28), &bb);
+  map.setTile(sf::Vector2<int>(24, 28), &bb);
+  map.setTile(sf::Vector2<int>(25, 28), &bbrc);
+  map.setTile(sf::Vector2<int>(26, 28), &f);
+  map.setTile(sf::Vector2<int>(27, 28), &re);
+  
+  map.setTile(sf::Vector2<int>(0, 29), &blc);
+  map.setTile(sf::Vector2<int>(1, 29), &be);
+  map.setTile(sf::Vector2<int>(2, 29), &be);
+  map.setTile(sf::Vector2<int>(3, 29), &be);
+  map.setTile(sf::Vector2<int>(4, 29), &be);
+  map.setTile(sf::Vector2<int>(5, 29), &be);
+  map.setTile(sf::Vector2<int>(6, 29), &be);
+  map.setTile(sf::Vector2<int>(7, 29), &be);
+  map.setTile(sf::Vector2<int>(8, 29), &be);
+  map.setTile(sf::Vector2<int>(9, 29), &be);
+  map.setTile(sf::Vector2<int>(10, 29), &be);
+  map.setTile(sf::Vector2<int>(11, 29), &be);
+  map.setTile(sf::Vector2<int>(12, 29), &be);
+  map.setTile(sf::Vector2<int>(13, 29), &be);
+  map.setTile(sf::Vector2<int>(14, 29), &be);
+  map.setTile(sf::Vector2<int>(15, 29), &be);
+  map.setTile(sf::Vector2<int>(16, 29), &be);
+  map.setTile(sf::Vector2<int>(17, 29), &be);
+  map.setTile(sf::Vector2<int>(18, 29), &be);
+  map.setTile(sf::Vector2<int>(19, 29), &be);
+  map.setTile(sf::Vector2<int>(20, 29), &be);
+  map.setTile(sf::Vector2<int>(21, 29), &be);
+  map.setTile(sf::Vector2<int>(22, 29), &be);
+  map.setTile(sf::Vector2<int>(23, 29), &be);
+  map.setTile(sf::Vector2<int>(24, 29), &be);
+  map.setTile(sf::Vector2<int>(25, 29), &be);
+  map.setTile(sf::Vector2<int>(26, 29), &be);
+  map.setTile(sf::Vector2<int>(27, 29), &brc);
+  
   // Create a graphical text to display
   sf::Font font;
   if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
@@ -466,8 +1075,6 @@ int main(int, char const**)
         window.draw(tempSprite);
       }
     }
-    
-    window.draw(tlc.getSprite());
     
     // Update the window
     window.display();
