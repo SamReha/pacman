@@ -1031,10 +1031,10 @@ int main(int, char const**)
   
   // Declare the ghosts!
   // Restructure these such that each ghost type is it's own subclass of ghost. Switch-casing based on personality type would be ridiculous
-  Ghost Pinky(sf::String("HOUSE"), sf::String(""));
-  Ghost Blinky(sf::String("HOUSE"), sf::String(""));
-  Ghost Inky(sf::String("HOUSE"), sf::String(""));
-  Ghost Sue(sf::String("HOUSE"), sf::String(""));
+  //Ghost Pinky(sf::String("HOUSE"), sf::String(""));
+  //Ghost Blinky(sf::String("HOUSE"), sf::String(""));
+  //Ghost Inky(sf::String("HOUSE"), sf::String(""));
+  //Ghost Sue(sf::String("HOUSE"), sf::String(""));
   
   // Game variables
   // Variabes used to draw map

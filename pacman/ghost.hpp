@@ -1,29 +1,32 @@
-#include <SFML/Graphics.hpp>
+#include "maze_obj.hpp"
 
-class Ghost {
+class Ghost: public Maze_obj {
 private:
-  sf::Sprite* upSprites;
-  sf::Sprite* downSprites;
-  sf::Sprite* leftSprites;
-  sf::Sprite* rightSprites;
-  sf::Sprite* ghostBlueSprites;
-  sf::Sprite* ghostWhiteSprites;
+  std::vector<sf::Sprite> upSprites;
+  std::vector<sf::Sprite> downSprites;
+  std::vector<sf::Sprite> leftSprites;
+  std::vector<sf::Sprite> rightSprites;
+  std::vector<sf::Sprite> ghostBlueSprites;
+  std::vector<sf::Sprite> ghostWhiteSprites;
   sf::Sprite ghostEyesUp;
   sf::Sprite ghostEyesDown;
   sf::Sprite ghostEyesLeft;
   sf::Sprite ghostEyesRight;
-  
-  sf::Sprite currentSprite;
+
   sf::String state;
-  sf::String personality;
-  sf::Vector2<double> position;
   sf::Vector2<double> velocity;
 public:
-  Ghost(sf::String, sf::String);
+  Ghost(sf::Vector2<double>, sf::String);
+
+  void setUpSprites(std::vector<sf::Sprite>);
+  void setDownSprites(std::vector<sf::Sprite>);
+  void setLeftSprites(std::vector<sf::Sprite>);
+  void setRightSprites(std::vector<sf::Sprite>);
+  void setBlueSprites(std::vector<sf::Sprite>);
+  void setWhiteSprites(std::vector<sf::Sprite>);
+  void setEyeBallSprites(std::vector<sf::Sprite>);
   
-  sf::Sprite getSprite();   // Fetches the current sprite for this ghost
   sf::String getState();    // Fetches current state
-  sf::Vector2<double> getPosition();
   
-  void update();            // Update state and velocity based on world state, update current sprite based on state, update position based on velocity
+  void update();
 };

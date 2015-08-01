@@ -11,6 +11,7 @@
 		E402A2C41B6087C7009D1ECC /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E402A2C31B6087C7009D1ECC /* map.cpp */; };
 		E4105D811B6D7341005D5A8D /* maze_obj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4105D801B6D7341005D5A8D /* maze_obj.cpp */; };
 		E4105D841B6D7654005D5A8D /* pellet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4105D831B6D7654005D5A8D /* pellet.cpp */; };
+		E4105D871B6D821B005D5A8D /* pinky.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4105D861B6D821B005D5A8D /* pinky.cpp */; };
 		E429AFF81B687191008A611F /* ghost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E429AFF71B687191008A611F /* ghost.cpp */; };
 		E4ACA2981B5C8CE3002E8735 /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = E4ACA2971B5C8CE3002E8735 /* ResourcePath.mm */; };
 		E4ACA29B1B5C8CE3002E8735 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4ACA29A1B5C8CE3002E8735 /* main.cpp */; };
@@ -31,6 +32,8 @@
 		E4105D801B6D7341005D5A8D /* maze_obj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = maze_obj.cpp; sourceTree = "<group>"; };
 		E4105D821B6D75E6005D5A8D /* pellet.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pellet.hpp; sourceTree = "<group>"; };
 		E4105D831B6D7654005D5A8D /* pellet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pellet.cpp; sourceTree = "<group>"; };
+		E4105D851B6D81EA005D5A8D /* pinky.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pinky.hpp; sourceTree = "<group>"; };
+		E4105D861B6D821B005D5A8D /* pinky.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pinky.cpp; sourceTree = "<group>"; };
 		E429AFF71B687191008A611F /* ghost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ghost.cpp; sourceTree = "<group>"; };
 		E47922FB1B67289B00B47513 /* ghost.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ghost.hpp; sourceTree = "<group>"; };
 		E4ACA2921B5C8CE3002E8735 /* pacman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pacman.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +95,8 @@
 				E402A2C31B6087C7009D1ECC /* map.cpp */,
 				E47922FB1B67289B00B47513 /* ghost.hpp */,
 				E429AFF71B687191008A611F /* ghost.cpp */,
+				E4105D851B6D81EA005D5A8D /* pinky.hpp */,
+				E4105D861B6D821B005D5A8D /* pinky.cpp */,
 				E4ACA29C1B5C8CE3002E8735 /* Resources */,
 				E4ACA2951B5C8CE3002E8735 /* Supporting Files */,
 			);
@@ -211,6 +216,7 @@
 				E429AFF81B687191008A611F /* ghost.cpp in Sources */,
 				E4ACA2AC1B5C946D002E8735 /* button.cpp in Sources */,
 				E4ACA2981B5C8CE3002E8735 /* ResourcePath.mm in Sources */,
+				E4105D871B6D821B005D5A8D /* pinky.cpp in Sources */,
 				E402A2C41B6087C7009D1ECC /* map.cpp in Sources */,
 				E4105D811B6D7341005D5A8D /* maze_obj.cpp in Sources */,
 				E402A2C11B607E59009D1ECC /* tile.cpp in Sources */,
