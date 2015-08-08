@@ -17,6 +17,7 @@
 		E47A843E1B7315DD00073763 /* pinky.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A84351B7315DD00073763 /* pinky.cpp */; };
 		E47A843F1B7315DD00073763 /* sue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A84371B7315DD00073763 /* sue.cpp */; };
 		E47A84421B731E5E00073763 /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A84411B731E5E00073763 /* AssetManager.cpp */; };
+		E47C8CD71B76A5F400FFD994 /* character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47C8CD61B76A5F400FFD994 /* character.cpp */; };
 		E4ACA2981B5C8CE3002E8735 /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = E4ACA2971B5C8CE3002E8735 /* ResourcePath.mm */; };
 		E4ACA29B1B5C8CE3002E8735 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4ACA29A1B5C8CE3002E8735 /* main.cpp */; };
 		E4ACA2A01B5C8CE4002E8735 /* nice_music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = E4ACA29F1B5C8CE4002E8735 /* nice_music.ogg */; };
@@ -47,6 +48,8 @@
 		E47A84381B7315DD00073763 /* sue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sue.hpp; sourceTree = "<group>"; };
 		E47A84401B731D4C00073763 /* AssetManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AssetManager.hpp; sourceTree = "<group>"; };
 		E47A84411B731E5E00073763 /* AssetManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
+		E47C8CD51B76A24C00FFD994 /* character.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = character.hpp; sourceTree = "<group>"; };
+		E47C8CD61B76A5F400FFD994 /* character.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = character.cpp; sourceTree = "<group>"; };
 		E4ACA2921B5C8CE3002E8735 /* pacman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pacman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4ACA2961B5C8CE3002E8735 /* pacman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pacman-Info.plist"; sourceTree = "<group>"; };
 		E4ACA2971B5C8CE3002E8735 /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
@@ -91,20 +94,22 @@
 			isa = PBXGroup;
 			children = (
 				E4ACA29A1B5C8CE3002E8735 /* main.cpp */,
-				E47A842B1B7315DD00073763 /* blinky.cpp */,
-				E47A842C1B7315DD00073763 /* blinky.hpp */,
-				E47A842D1B7315DD00073763 /* ghost.cpp */,
-				E47A842E1B7315DD00073763 /* ghost.hpp */,
-				E47A842F1B7315DD00073763 /* inky.cpp */,
-				E47A84301B7315DD00073763 /* inky.hpp */,
-				E47A84311B7315DD00073763 /* maze_obj.cpp */,
 				E47A84321B7315DD00073763 /* maze_obj.hpp */,
-				E47A84331B7315DD00073763 /* pellet.cpp */,
-				E47A84341B7315DD00073763 /* pellet.hpp */,
-				E47A84351B7315DD00073763 /* pinky.cpp */,
+				E47A84311B7315DD00073763 /* maze_obj.cpp */,
+				E47C8CD51B76A24C00FFD994 /* character.hpp */,
+				E47C8CD61B76A5F400FFD994 /* character.cpp */,
+				E47A842E1B7315DD00073763 /* ghost.hpp */,
+				E47A842D1B7315DD00073763 /* ghost.cpp */,
+				E47A842C1B7315DD00073763 /* blinky.hpp */,
+				E47A842B1B7315DD00073763 /* blinky.cpp */,
+				E47A84301B7315DD00073763 /* inky.hpp */,
+				E47A842F1B7315DD00073763 /* inky.cpp */,
 				E47A84361B7315DD00073763 /* pinky.hpp */,
-				E47A84371B7315DD00073763 /* sue.cpp */,
+				E47A84351B7315DD00073763 /* pinky.cpp */,
 				E47A84381B7315DD00073763 /* sue.hpp */,
+				E47A84371B7315DD00073763 /* sue.cpp */,
+				E47A84341B7315DD00073763 /* pellet.hpp */,
+				E47A84331B7315DD00073763 /* pellet.cpp */,
 				E4ACA2971B5C8CE3002E8735 /* ResourcePath.mm */,
 				E4ACA2991B5C8CE3002E8735 /* ResourcePath.hpp */,
 				E4ACA2AA1B5C907E002E8735 /* button.hpp */,
@@ -230,6 +235,7 @@
 				E4ACA29B1B5C8CE3002E8735 /* main.cpp in Sources */,
 				E47A843C1B7315DD00073763 /* maze_obj.cpp in Sources */,
 				E4ACA2AC1B5C946D002E8735 /* button.cpp in Sources */,
+				E47C8CD71B76A5F400FFD994 /* character.cpp in Sources */,
 				E47A84421B731E5E00073763 /* AssetManager.cpp in Sources */,
 				E47A84391B7315DD00073763 /* blinky.cpp in Sources */,
 				E4ACA2981B5C8CE3002E8735 /* ResourcePath.mm in Sources */,

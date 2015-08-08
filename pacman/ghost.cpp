@@ -5,22 +5,6 @@ Ghost::Ghost(sf::Vector2<double> pos, sf::String ste) {
   state = ste;
 }
 
-void Ghost::setUpSprites(std::vector<sf::Sprite> vector) {
-  upSprites = vector;
-}
-
-void Ghost::setDownSprites(std::vector<sf::Sprite> vector) {
-  downSprites = vector;
-}
-
-void Ghost::setLeftSprites(std::vector<sf::Sprite> vector) {
-  leftSprites = vector;
-}
-
-void Ghost::setRightSprites(std::vector<sf::Sprite> vector) {
-  rightSprites = vector;
-}
-
 void Ghost::setBlueSprites(std::vector<sf::Sprite> vector) {
   blueSprites = vector;
 }
