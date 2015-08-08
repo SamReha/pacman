@@ -1,6 +1,8 @@
 // Heads up, you should probably never instantiate a maze_obj!
 #include <SFML/Graphics.hpp>
 
+#pragma once
+
 class Maze_obj {
 protected:
   sf::Sprite sprite;

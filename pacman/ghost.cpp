@@ -1,4 +1,3 @@
-#include <iostream>
 #include "ghost.hpp"
 
 Ghost::Ghost(sf::Vector2<double> pos, sf::String ste) {

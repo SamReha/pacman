@@ -1,4 +1,9 @@
+//#include <SFML/Graphics.hpp>
+#include <iostream>
+
 #include "maze_obj.hpp"
+
+#pragma once
 
 class Ghost: public Maze_obj {
 protected:

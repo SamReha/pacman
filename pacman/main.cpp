@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "ResourcePath.hpp"
+#include "AssetManager.hpp"
 #include "map.hpp"
 #include "pinky.hpp"
 #include "blinky.hpp"
@@ -13,7 +14,7 @@ const int TILE_WIDTH = 24;
 int main(int, char const**)
 {
   // Create the main window
-  sf::RenderWindow window(sf::VideoMode(TILE_WIDTH*28, TILE_WIDTH*30), "PAC MAN");
+  sf::RenderWindow window(sf::VideoMode(TILE_WIDTH*28, TILE_WIDTH*31), "PAC MAN");
   
   // Set the Icon
   sf::Image icon;
@@ -22,112 +23,54 @@ int main(int, char const**)
   }
   window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
   
-  // More importantly, let's build up a tileset. - could be cleaner if tileset was external module tha returned dictionary
+  // Try to open the given texture
+  sf::Texture tileset_texture;
+  if (!tileset_texture.loadFromFile(resourcePath() + "data/full_texture_x3.png")) {
+    return EXIT_FAILURE;
+  }
+  
+  // More importantly, let's generate our tileset from that texture.
+  AssetManager assetManager(TILE_WIDTH);
+  std::map<sf::String, sf::Sprite> spriteSet = assetManager.generateSpriteSet(tileset_texture);
+  
   sf::Texture level_texture;
   if (!level_texture.loadFromFile(resourcePath() + "data/full_texture_x3.png")) {
     return EXIT_FAILURE;
   }
-  sf::Sprite top_left_corner(level_texture, sf::Rect<int>(0, 0, TILE_WIDTH, TILE_WIDTH));
-  PacTile tlc(top_left_corner, sf::String("WALL"));
-  
-  // These are the double-line left corners that appear within the maze
-  sf::Sprite lower_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*22, 9*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
-  PacTile llc(lower_left_corner, sf::String("WALL"));
-  
-  sf::Sprite inner_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*13, 0, TILE_WIDTH, TILE_WIDTH));
-  PacTile ilc(inner_left_corner, sf::String("WALL"));
-  
-  sf::Sprite inner_left_bottom_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*0, TILE_WIDTH*24, TILE_WIDTH, TILE_WIDTH));
-  PacTile ilblc(inner_left_bottom_left_corner, sf::String("WALL"));
-  
-  sf::Sprite inner_right_bottom_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*27, TILE_WIDTH*24, TILE_WIDTH, TILE_WIDTH));
-  PacTile irbrc(inner_right_bottom_right_corner, sf::String("WALL"));
-  
-  sf::Sprite inner_left_top_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*0, TILE_WIDTH*25, TILE_WIDTH, TILE_WIDTH));
-  PacTile iltlc(inner_left_top_left_corner, sf::String("WALL"));
-  
-  sf::Sprite inner_right_top_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*27, TILE_WIDTH*25, TILE_WIDTH, TILE_WIDTH));
-  PacTile irtrc(inner_right_top_right_corner, sf::String("WALL"));
-  
-  sf::Sprite weird_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*5, TILE_WIDTH*13, TILE_WIDTH, TILE_WIDTH));
-  PacTile wlc(weird_left_corner, sf::String("WALL"));
-  
-  sf::Sprite box_top_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*2, TILE_WIDTH*2, TILE_WIDTH, TILE_WIDTH));
-  PacTile btlc(box_top_left_corner, sf::String("WALL"));
 
-  sf::Sprite top_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*27, 0, TILE_WIDTH, TILE_WIDTH));
-  PacTile trc(top_right_corner, sf::String("WALL"));
-  
-  // These are the double-line right corners that appear within the maze
-  sf::Sprite lower_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*5, 9*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
-  PacTile lrc(lower_right_corner, sf::String("WALL"));
-  
-  sf::Sprite inner_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*14, 0, TILE_WIDTH, TILE_WIDTH));
-  PacTile irc(inner_right_corner, sf::String("WALL"));
-  
-  sf::Sprite weird_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*22, TILE_WIDTH*13, TILE_WIDTH, TILE_WIDTH));
-  PacTile wrc(weird_right_corner, sf::String("WALL"));
-  
-  sf::Sprite box_top_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*5, TILE_WIDTH*2, TILE_WIDTH, TILE_WIDTH));
-  PacTile btrc(box_top_right_corner, sf::String("WALL"));
-
-  sf::Sprite bottom_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*27, 9*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
-  PacTile brc(bottom_right_corner, sf::String("WALL"));
-  
-  sf::Sprite box_bottom_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*5, TILE_WIDTH*4, TILE_WIDTH, TILE_WIDTH));
-  PacTile bbrc(box_bottom_right_corner, sf::String("WALL"));
-
-  sf::Sprite bottom_left_corner(level_texture, sf::Rect<int>(0, 9*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
-  PacTile blc(bottom_left_corner, sf::String("WALL"));
-  
-  sf::Sprite box_bottom_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*2, TILE_WIDTH*4, TILE_WIDTH, TILE_WIDTH));
-  PacTile bblc(box_bottom_left_corner, sf::String("WALL"));
-
-  sf::Sprite top_edge(level_texture, sf::Rect<int>(TILE_WIDTH*2, 0, TILE_WIDTH, TILE_WIDTH));
-  PacTile te(top_edge, sf::String("WALL"));
-  
-  sf::Sprite box_top(level_texture, sf::Rect<int>(TILE_WIDTH*4, TILE_WIDTH*2, TILE_WIDTH, TILE_WIDTH));
-  PacTile bt(box_top, sf::String("WALL"));
-
-  sf::Sprite left_edge(level_texture, sf::Rect<int>(0, TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
-  PacTile le(left_edge, sf::String("WALL"));
-  
-  sf::Sprite inner_left_edge(level_texture, sf::Rect<int>(TILE_WIDTH*14, TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
-  PacTile ile(inner_left_edge, sf::String("WALL"));
-
-  sf::Sprite right_edge(level_texture, sf::Rect<int>(TILE_WIDTH*27, TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
-  PacTile re(right_edge, sf::String("WALL"));
-  
-  sf::Sprite inner_right_edge(level_texture, sf::Rect<int>(TILE_WIDTH*13, TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
-  PacTile ire(inner_right_edge, sf::String("WALL"));
-
-  sf::Sprite bottom_edge(level_texture, sf::Rect<int>(TILE_WIDTH, 9*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
-  PacTile be(bottom_edge, sf::String("WALL"));
-  
-  sf::Sprite box_bottom(level_texture, sf::Rect<int>(TILE_WIDTH*4, TILE_WIDTH*4, TILE_WIDTH, TILE_WIDTH));
-  PacTile bb(box_bottom, sf::String("WALL"));
+  PacTile tlc(spriteSet["outer_top_left_corner"], "WALL");
+  PacTile ilc(spriteSet["weird_north_left_corner"], "WALL");
+  PacTile ilblc(spriteSet["weird_west_upper_corner"], "WALL");
+  PacTile irbrc(spriteSet["weird_east_upper_corner"], "WALL");
+  PacTile iltlc(spriteSet["weird_west_lower_corner"], "WALL");
+  PacTile irtrc(spriteSet["weird_east_lower_corner"], "WALL");
+  PacTile btlc(spriteSet["box_top_left_corner"], "WALL");
+  PacTile trc(spriteSet["top_right_corner"], "WALL");
+  PacTile irc(spriteSet["weird_north_right_corner"], "WALL");
+  PacTile btrc(spriteSet["box_top_right_corner"], "WALL");
+  PacTile brc(spriteSet["bottom_right_corner"], "WALL");
+  PacTile bbrc(spriteSet["box_bottom_right_corner"], "WALL");
+  PacTile blc(spriteSet["bottom_left_corner"], "WALL");
+  PacTile bblc(spriteSet["box_bottom_left_corner"], "WALL");
+  PacTile te(spriteSet["top_edge"], "WALL");
+  PacTile bt(spriteSet["box_top_edge"], "WALL");
+  PacTile le(spriteSet["left_edge"], "WALL");
+  PacTile ile(spriteSet["inner_left_edge"], "WALL");
+  PacTile re(spriteSet["right_edge"], "WALL");
+  PacTile ire(spriteSet["inner_right_edge"], "WALL");
+  PacTile be(spriteSet["bottom_edge"], "WALL");
+  PacTile bb(spriteSet["box_bottom_edge"], "WALL");
   
   // House tiles!
-  sf::Sprite house_top_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*10, TILE_WIDTH*12, TILE_WIDTH, TILE_WIDTH));
-  PacTile htrc(house_top_right_corner, sf::String("WALL"));
-  
-  sf::Sprite house_bottom_right_corner(level_texture, sf::Rect<int>(TILE_WIDTH*17, TILE_WIDTH*16, TILE_WIDTH, TILE_WIDTH));
-  PacTile hbrc(house_bottom_right_corner, sf::String("WALL"));
-  
-  sf::Sprite house_top_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*17, TILE_WIDTH*12, TILE_WIDTH, TILE_WIDTH));
-  PacTile htlc(house_top_left_corner, sf::String("WALL"));
-  
-  sf::Sprite house_bottom_left_corner(level_texture, sf::Rect<int>(TILE_WIDTH*10, TILE_WIDTH*16, TILE_WIDTH, TILE_WIDTH));
-  PacTile hblc(house_bottom_left_corner, sf::String("WALL"));
-  
-  sf::Sprite door(level_texture, sf::Rect<int>(TILE_WIDTH*13, TILE_WIDTH*12, TILE_WIDTH, TILE_WIDTH));
-  PacTile d(door, sf::String("WALL"));
-
-  sf::Sprite floor(level_texture, sf::Rect<int>(30*TILE_WIDTH, TILE_WIDTH, TILE_WIDTH, TILE_WIDTH));
-  PacTile f(floor, sf::String("FLOOR"));
+  PacTile htrc(spriteSet["house_top_right_corner"], "WALL");
+  PacTile hbrc(spriteSet["house_bottom_right_corner"], "WALL");
+  PacTile htlc(spriteSet["house_top_left_corner"], "WALL");
+  PacTile hblc(spriteSet["house_bottom_left_corner"], "WALL");
+  PacTile d(spriteSet["door"], "WALL");
+  PacTile f(spriteSet["floor"], "FLOOR");
   
   // Load up the map! - this is also messy. Perhaps this should also be a module that returns a configured map?
-  Map map(sf::Vector2<double>(0, 0), sf::Vector2<int>(28, 30), TILE_WIDTH);
+  Map map(sf::Vector2<double>(0, 0), sf::Vector2<int>(28, 31), TILE_WIDTH);
   map.setTile(sf::Vector2<int>(0, 0), &tlc);
   map.setTile(sf::Vector2<int>(1, 0), &te);
   map.setTile(sf::Vector2<int>(2, 0), &te);
@@ -394,7 +337,7 @@ int main(int, char const**)
   map.setTile(sf::Vector2<int>(2, 9), &be);
   map.setTile(sf::Vector2<int>(3, 9), &be);
   map.setTile(sf::Vector2<int>(4, 9), &be);
-  map.setTile(sf::Vector2<int>(5, 9), &lrc);
+  map.setTile(sf::Vector2<int>(5, 9), &btrc);
   map.setTile(sf::Vector2<int>(6, 9), &f);
   map.setTile(sf::Vector2<int>(7, 9), &ire);
   map.setTile(sf::Vector2<int>(8, 9), &bblc);
@@ -411,7 +354,7 @@ int main(int, char const**)
   map.setTile(sf::Vector2<int>(19, 9), &bbrc);
   map.setTile(sf::Vector2<int>(20, 9), &ile);
   map.setTile(sf::Vector2<int>(21, 9), &f);
-  map.setTile(sf::Vector2<int>(22, 9), &llc);
+  map.setTile(sf::Vector2<int>(22, 9), &btlc);
   map.setTile(sf::Vector2<int>(23, 9), &be);
   map.setTile(sf::Vector2<int>(24, 9), &be);
   map.setTile(sf::Vector2<int>(25, 9), &be);
@@ -510,7 +453,7 @@ int main(int, char const**)
   map.setTile(sf::Vector2<int>(2, 13), &te);
   map.setTile(sf::Vector2<int>(3, 13), &te);
   map.setTile(sf::Vector2<int>(4, 13), &te);
-  map.setTile(sf::Vector2<int>(5, 13), &wlc);
+  map.setTile(sf::Vector2<int>(5, 13), &bbrc);
   map.setTile(sf::Vector2<int>(6, 13), &f);
   map.setTile(sf::Vector2<int>(7, 13), &bblc);
   map.setTile(sf::Vector2<int>(8, 13), &bbrc);
@@ -527,7 +470,7 @@ int main(int, char const**)
   map.setTile(sf::Vector2<int>(19, 13), &bblc);
   map.setTile(sf::Vector2<int>(20, 13), &bbrc);
   map.setTile(sf::Vector2<int>(21, 13), &f);
-  map.setTile(sf::Vector2<int>(22, 13), &wrc);
+  map.setTile(sf::Vector2<int>(22, 13), &bblc);
   map.setTile(sf::Vector2<int>(23, 13), &te);
   map.setTile(sf::Vector2<int>(24, 13), &te);
   map.setTile(sf::Vector2<int>(25, 13), &te);
@@ -568,7 +511,7 @@ int main(int, char const**)
   map.setTile(sf::Vector2<int>(2, 15), &be);
   map.setTile(sf::Vector2<int>(3, 15), &be);
   map.setTile(sf::Vector2<int>(4, 15), &be);
-  map.setTile(sf::Vector2<int>(5, 15), &lrc);
+  map.setTile(sf::Vector2<int>(5, 15), &btrc);
   map.setTile(sf::Vector2<int>(6, 15), &f);
   map.setTile(sf::Vector2<int>(7, 15), &btlc);
   map.setTile(sf::Vector2<int>(8, 15), &btrc);
@@ -585,7 +528,7 @@ int main(int, char const**)
   map.setTile(sf::Vector2<int>(19, 15), &btlc);
   map.setTile(sf::Vector2<int>(20, 15), &btrc);
   map.setTile(sf::Vector2<int>(21, 15), &f);
-  map.setTile(sf::Vector2<int>(22, 15), &llc);
+  map.setTile(sf::Vector2<int>(22, 15), &btlc);
   map.setTile(sf::Vector2<int>(23, 15), &be);
   map.setTile(sf::Vector2<int>(24, 15), &be);
   map.setTile(sf::Vector2<int>(25, 15), &be);
@@ -969,34 +912,63 @@ int main(int, char const**)
   map.setTile(sf::Vector2<int>(26, 28), &f);
   map.setTile(sf::Vector2<int>(27, 28), &re);
   
-  map.setTile(sf::Vector2<int>(0, 29), &blc);
-  map.setTile(sf::Vector2<int>(1, 29), &be);
-  map.setTile(sf::Vector2<int>(2, 29), &be);
-  map.setTile(sf::Vector2<int>(3, 29), &be);
-  map.setTile(sf::Vector2<int>(4, 29), &be);
-  map.setTile(sf::Vector2<int>(5, 29), &be);
-  map.setTile(sf::Vector2<int>(6, 29), &be);
-  map.setTile(sf::Vector2<int>(7, 29), &be);
-  map.setTile(sf::Vector2<int>(8, 29), &be);
-  map.setTile(sf::Vector2<int>(9, 29), &be);
-  map.setTile(sf::Vector2<int>(10, 29), &be);
-  map.setTile(sf::Vector2<int>(11, 29), &be);
-  map.setTile(sf::Vector2<int>(12, 29), &be);
-  map.setTile(sf::Vector2<int>(13, 29), &be);
-  map.setTile(sf::Vector2<int>(14, 29), &be);
-  map.setTile(sf::Vector2<int>(15, 29), &be);
-  map.setTile(sf::Vector2<int>(16, 29), &be);
-  map.setTile(sf::Vector2<int>(17, 29), &be);
-  map.setTile(sf::Vector2<int>(18, 29), &be);
-  map.setTile(sf::Vector2<int>(19, 29), &be);
-  map.setTile(sf::Vector2<int>(20, 29), &be);
-  map.setTile(sf::Vector2<int>(21, 29), &be);
-  map.setTile(sf::Vector2<int>(22, 29), &be);
-  map.setTile(sf::Vector2<int>(23, 29), &be);
-  map.setTile(sf::Vector2<int>(24, 29), &be);
-  map.setTile(sf::Vector2<int>(25, 29), &be);
-  map.setTile(sf::Vector2<int>(26, 29), &be);
-  map.setTile(sf::Vector2<int>(27, 29), &brc);
+  map.setTile(sf::Vector2<int>(0, 29), &le);
+  map.setTile(sf::Vector2<int>(1, 29), &f);
+  map.setTile(sf::Vector2<int>(2, 29), &f);
+  map.setTile(sf::Vector2<int>(3, 29), &f);
+  map.setTile(sf::Vector2<int>(4, 29), &f);
+  map.setTile(sf::Vector2<int>(5, 29), &f);
+  map.setTile(sf::Vector2<int>(6, 29), &f);
+  map.setTile(sf::Vector2<int>(7, 29), &f);
+  map.setTile(sf::Vector2<int>(8, 29), &f);
+  map.setTile(sf::Vector2<int>(9, 29), &f);
+  map.setTile(sf::Vector2<int>(10, 29), &f);
+  map.setTile(sf::Vector2<int>(11, 29), &f);
+  map.setTile(sf::Vector2<int>(12, 29), &f);
+  map.setTile(sf::Vector2<int>(13, 29), &f);
+  map.setTile(sf::Vector2<int>(14, 29), &f);
+  map.setTile(sf::Vector2<int>(15, 29), &f);
+  map.setTile(sf::Vector2<int>(16, 29), &f);
+  map.setTile(sf::Vector2<int>(17, 29), &f);
+  map.setTile(sf::Vector2<int>(18, 29), &f);
+  map.setTile(sf::Vector2<int>(19, 29), &f);
+  map.setTile(sf::Vector2<int>(20, 29), &f);
+  map.setTile(sf::Vector2<int>(21, 29), &f);
+  map.setTile(sf::Vector2<int>(22, 29), &f);
+  map.setTile(sf::Vector2<int>(23, 29), &f);
+  map.setTile(sf::Vector2<int>(24, 29), &f);
+  map.setTile(sf::Vector2<int>(25, 29), &f);
+  map.setTile(sf::Vector2<int>(26, 29), &f);
+  map.setTile(sf::Vector2<int>(27, 29), &re);
+  
+  map.setTile(sf::Vector2<int>(0, 30), &blc);
+  map.setTile(sf::Vector2<int>(1, 30), &be);
+  map.setTile(sf::Vector2<int>(2, 30), &be);
+  map.setTile(sf::Vector2<int>(3, 30), &be);
+  map.setTile(sf::Vector2<int>(4, 30), &be);
+  map.setTile(sf::Vector2<int>(5, 30), &be);
+  map.setTile(sf::Vector2<int>(6, 30), &be);
+  map.setTile(sf::Vector2<int>(7, 30), &be);
+  map.setTile(sf::Vector2<int>(8, 30), &be);
+  map.setTile(sf::Vector2<int>(9, 30), &be);
+  map.setTile(sf::Vector2<int>(10, 30), &be);
+  map.setTile(sf::Vector2<int>(11, 30), &be);
+  map.setTile(sf::Vector2<int>(12, 30), &be);
+  map.setTile(sf::Vector2<int>(13, 30), &be);
+  map.setTile(sf::Vector2<int>(14, 30), &be);
+  map.setTile(sf::Vector2<int>(15, 30), &be);
+  map.setTile(sf::Vector2<int>(16, 30), &be);
+  map.setTile(sf::Vector2<int>(17, 30), &be);
+  map.setTile(sf::Vector2<int>(18, 30), &be);
+  map.setTile(sf::Vector2<int>(19, 30), &be);
+  map.setTile(sf::Vector2<int>(20, 30), &be);
+  map.setTile(sf::Vector2<int>(21, 30), &be);
+  map.setTile(sf::Vector2<int>(22, 30), &be);
+  map.setTile(sf::Vector2<int>(23, 30), &be);
+  map.setTile(sf::Vector2<int>(24, 30), &be);
+  map.setTile(sf::Vector2<int>(25, 30), &be);
+  map.setTile(sf::Vector2<int>(26, 30), &be);
+  map.setTile(sf::Vector2<int>(27, 30), &brc);
   
   // Create a graphical text to display
   sf::Font font;
@@ -1013,17 +985,16 @@ int main(int, char const**)
   }
   
   // Declare the ghosts!
-  //Pinky pinky(sf::Vector2<double>(0, 0), sf::String("HOME"));
-  Pinky pinky(sf::Vector2<double>(0, 0), sf::String("HOME"));
-  Blinky blinky(sf::Vector2<double>(0, 0), sf::String("HOME"));
-  Inky inky(sf::Vector2<double>(0, 0), sf::String("HOME"));
-  Sue sue(sf::Vector2<double>(0, 0), sf::String("HOME"));
+  Pinky pinky(sf::Vector2<double>(0, 0), "HOME");
+  Blinky blinky(sf::Vector2<double>(0, 0), "HOME");
+  Inky inky(sf::Vector2<double>(0, 0), "HOME");
+  Sue sue(sf::Vector2<double>(0, 0), "HOME");
   
   // Game variables
   // Variabes used to draw map
   sf::Vector2<double> mapAnchor;
   sf::Vector2<int> mapSize;
-  PacTile tempTile(floor, sf::String("FLOOR"));
+  PacTile tempTile(spriteSet["floor"], "FLOOR");
   sf::Sprite tempSprite;
   
   // Play the music

@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 
+#pragma once
+
 // Tiles are the individual elements which make up a map.
 class PacTile {
 private:
