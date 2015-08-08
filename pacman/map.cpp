@@ -1,5 +1,4 @@
 #include "map.hpp"
-//#include "tile.hpp"
 
 Map::Map(sf::Vector2<double> anchor, sf::Vector2<int> sze, int width) {
   anchorPoint = anchor;

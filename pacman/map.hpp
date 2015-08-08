@@ -1,5 +1,7 @@
 #include "tile.hpp"
 
+#pragma once
+
 class Map {
 private:
   PacTile** mapBody;

@@ -31,12 +31,8 @@ int main(int, char const**)
   
   // More importantly, let's generate our tileset from that texture.
   AssetManager assetManager(TILE_WIDTH);
-  std::map<sf::String, sf::Sprite> spriteSet = assetManager.generateSpriteSet(tileset_texture);
-  
-  sf::Texture level_texture;
-  if (!level_texture.loadFromFile(resourcePath() + "data/full_texture_x3.png")) {
-    return EXIT_FAILURE;
-  }
+  std::map<sf::String, sf::Sprite> spriteSet = assetManager.generateSpriteSet(&tileset_texture);
+  std::map<sf::String, PacTile> tileSet;
 
   PacTile tlc(spriteSet["outer_top_left_corner"], "WALL");
   PacTile ilc(spriteSet["weird_north_left_corner"], "WALL");
@@ -60,7 +56,6 @@ int main(int, char const**)
   PacTile ire(spriteSet["inner_right_edge"], "WALL");
   PacTile be(spriteSet["bottom_edge"], "WALL");
   PacTile bb(spriteSet["box_bottom_edge"], "WALL");
-  
   // House tiles!
   PacTile htrc(spriteSet["house_top_right_corner"], "WALL");
   PacTile hbrc(spriteSet["house_bottom_right_corner"], "WALL");
@@ -69,8 +64,9 @@ int main(int, char const**)
   PacTile d(spriteSet["door"], "WALL");
   PacTile f(spriteSet["floor"], "FLOOR");
   
-  // Load up the map! - this is also messy. Perhaps this should also be a module that returns a configured map?
+  // Load up the map! - man, I wish I could push this off into the asset manager, but pointer logic is nightmarish
   Map map(sf::Vector2<double>(0, 0), sf::Vector2<int>(28, 31), TILE_WIDTH);
+  
   map.setTile(sf::Vector2<int>(0, 0), &tlc);
   map.setTile(sf::Vector2<int>(1, 0), &te);
   map.setTile(sf::Vector2<int>(2, 0), &te);
