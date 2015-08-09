@@ -10,6 +10,9 @@ protected:
 public:
   sf::Sprite getSprite();
   sf::Vector2<double> getPosition();
+  double getXPos();
+  double getYPos();
+  
   void setPosition(double, double);
   void setSprite(sf::Sprite spr);
 };
