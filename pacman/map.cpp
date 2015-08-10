@@ -48,6 +48,14 @@ PacTile* Map::getTileAtPoint(sf::Vector2<double> point) {
   return mapBody[realIndex];
 }
 
+sf::Vector2<int> Map::convertPositionToIndex(double x, double y) {
+  int realIndex = getIndexFromPoint(sf::Vector2<double>(x, y));
+  int xComponent = realIndex%size.x;
+  int yComponent = realIndex/size.x;
+  
+  return sf::Vector2<int>(xComponent, yComponent);
+}
+
 sf::Vector2<int> Map::getSize() {
   return size;
 }

@@ -18,6 +18,7 @@ public:
   
   PacTile* getTileAtIndex(sf::Vector2<int> pos);                              // Gets tile by array index
   PacTile* getTileAtPoint(sf::Vector2<double> point);                         // Gets tile by position on screen
+  sf::Vector2<int> convertPositionToIndex(double x, double y);
   sf::Vector2<int> getSize();                                           // Gets size as a vector
   sf::Vector2<double> getAnchor();
   int getTileWidth();
