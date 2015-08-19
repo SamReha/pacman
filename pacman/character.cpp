@@ -8,21 +8,25 @@
 void Character::setUpSprites(std::vector<sf::Sprite> vector, int vecLeng) {
   upSprites = vector;
   vectorLength = vecLeng;
+  sprite = vector[0];
 }
 
 void Character::setDownSprites(std::vector<sf::Sprite> vector, int vecLeng) {
   downSprites = vector;
   vectorLength = vecLeng;
+  sprite = vector[0];
 }
 
 void Character::setLeftSprites(std::vector<sf::Sprite> vector, int vecLeng) {
   leftSprites = vector;
   vectorLength = vecLeng;
+  sprite = vector[0];
 }
 
 void Character::setRightSprites(std::vector<sf::Sprite> vector, int vecLeng) {
   rightSprites = vector;
   vectorLength = vecLeng;
+  sprite = vector[0];
 }
 
 void Character::setVelocity(sf::Vector2<double> newVelocity) {

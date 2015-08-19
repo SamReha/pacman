@@ -4,6 +4,7 @@
 #include "ResourcePath.hpp"
 #include "AssetManager.hpp"
 #include "map.hpp"
+#include "pacman.hpp"
 #include "pinky.hpp"
 #include "blinky.hpp"
 #include "inky.hpp"
@@ -993,6 +994,37 @@ int main(int, char const**)
   PacTile tempTile(spriteSet["floor"], "FLOOR");
   sf::Sprite tempSprite;
   
+  // Assemble the PacMan!
+  PacMan pacman(0.0, 1, 1);
+  std::vector<sf::Sprite> pacUpSprites;
+  std::vector<sf::Sprite> pacDownSprites;
+  std::vector<sf::Sprite> pacLeftSprites;
+  std::vector<sf::Sprite> pacRightSprites;
+  
+  pacUpSprites.push_back(spriteSet["pacUp0"]);
+  pacUpSprites.push_back(spriteSet["pacUp1"]);
+  pacUpSprites.push_back(spriteSet["pacUp2"]);
+  
+  pacDownSprites.push_back(spriteSet["pacDown0"]);
+  pacDownSprites.push_back(spriteSet["pacDown1"]);
+  pacDownSprites.push_back(spriteSet["pacDown2"]);
+  
+  pacLeftSprites.push_back(spriteSet["pacLeft0"]);
+  pacLeftSprites.push_back(spriteSet["pacLeft1"]);
+  pacLeftSprites.push_back(spriteSet["pacLeft2"]);
+  
+  pacRightSprites.push_back(spriteSet["pacRight0"]);
+  pacRightSprites.push_back(spriteSet["pacRight1"]);
+  pacRightSprites.push_back(spriteSet["pacRight2"]);
+  
+  pacman.setUpSprites(pacUpSprites, 3);
+  pacman.setDownSprites(pacDownSprites, 3);
+  pacman.setLeftSprites(pacLeftSprites, 3);
+  pacman.setRightSprites(pacRightSprites, 3);
+  pacman.setVelocity(sf::Vector2<double>(0.0, 1.0));
+  pacman.tryToMove("RIGHT");
+  
+  
   // Play the music
   music.play();
   
@@ -1011,6 +1043,8 @@ int main(int, char const**)
         window.close();
       }
     }
+    
+    pacman.update(map);
 
     // DRAWING THE SCREEN
     // Clear screen
@@ -1028,6 +1062,15 @@ int main(int, char const**)
         window.draw(tempSprite);
       }
     }
+    
+    // Then, draw any pellets / fruits, those type things
+    
+    // Then, draw the ghosts
+    
+    // Then, draw pacman
+    tempSprite = pacman.getSprite();
+    tempSprite.setPosition(pacman.getPosition().x, pacman.getPosition().y);
+    window.draw(tempSprite);
     
     // Update the window
     window.display();

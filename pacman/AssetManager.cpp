@@ -65,7 +65,7 @@ std::map<sf::String, sf::Sprite> AssetManager::generateSpriteSet(sf::Texture* ti
   
   sf::Sprite weird_left_corner(*tileset_texture, sf::Rect<int>(tileWidth*5, tileWidth*13, tileWidth, tileWidth));
   
-  // Box tiles!
+  // Box sprites!
   sf::Sprite box_top_edge(*tileset_texture, sf::Rect<int>(tileWidth*4, tileWidth*2, tileWidth, tileWidth));
   assetDict["box_top_edge"] = box_top_edge;
   
@@ -102,6 +102,35 @@ std::map<sf::String, sf::Sprite> AssetManager::generateSpriteSet(sf::Texture* ti
   
   sf::Sprite floor(*tileset_texture, sf::Rect<int>(30*tileWidth, tileWidth, tileWidth, tileWidth));
   assetDict["floor"] = floor;
+  
+  // Pac Man Sprites!
+  sf::Sprite pacUp0(*tileset_texture, sf::Rect<int>(61*tileWidth, 0, tileWidth*2-1, tileWidth*2-1));
+  sf::Sprite pacUp1(*tileset_texture, sf::Rect<int>(55*tileWidth, 0*tileWidth, tileWidth, tileWidth));
+  sf::Sprite pacUp2(*tileset_texture, sf::Rect<int>(55*tileWidth, 0*tileWidth, tileWidth, tileWidth));
+  assetDict["pacUp0"] = pacUp0;
+  assetDict["pacUp1"] = pacUp1;
+  assetDict["pacUp2"] = pacUp2;
+  
+  sf::Sprite pacDown0(*tileset_texture, sf::Rect<int>(61*tileWidth, 0, tileWidth*2-1, tileWidth*2-1));
+  sf::Sprite pacDown1(*tileset_texture, sf::Rect<int>(55*tileWidth, 0*tileWidth, tileWidth, tileWidth));
+  sf::Sprite pacDown2(*tileset_texture, sf::Rect<int>(55*tileWidth, 0*tileWidth, tileWidth, tileWidth));
+  assetDict["pacDown0"] = pacDown0;
+  assetDict["pacDown1"] = pacDown1;
+  assetDict["pacDown2"] = pacDown2;
+  
+  sf::Sprite pacLeft0(*tileset_texture, sf::Rect<int>(61*tileWidth, 0, tileWidth*2-1, tileWidth*2-1));
+  sf::Sprite pacLeft1(*tileset_texture, sf::Rect<int>(55*tileWidth, 0*tileWidth, tileWidth, tileWidth));
+  sf::Sprite pacLeft2(*tileset_texture, sf::Rect<int>(55*tileWidth, 0*tileWidth, tileWidth, tileWidth));
+  assetDict["pacLeft0"] = pacLeft0;
+  assetDict["pacLeft1"] = pacLeft1;
+  assetDict["pacLeft2"] = pacLeft2;
+
+  sf::Sprite pacRight0(*tileset_texture, sf::Rect<int>(61*tileWidth, 0, tileWidth*2-1, tileWidth*2-1));
+  sf::Sprite pacRight1(*tileset_texture, sf::Rect<int>(55*tileWidth, 0*tileWidth, tileWidth, tileWidth));
+  sf::Sprite pacRight2(*tileset_texture, sf::Rect<int>(55*tileWidth, 0*tileWidth, tileWidth, tileWidth));
+  assetDict["pacRight0"] = pacRight0;
+  assetDict["pacRight1"] = pacRight1;
+  assetDict["pacRight2"] = pacRight2;
 
   return assetDict;
 }

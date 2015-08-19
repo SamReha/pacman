@@ -90,6 +90,11 @@ PacMan::PacMan(double xPos, double yPos, int frmeRte) {
   
   activeVectorIndex = 0;
   timeOfLastSpriteChange = -1.0;
+  sprite.setPosition(xPos, yPos);
+}
+
+void PacMan::tryToMove(sf::String direction) {
+  desiredDirection = direction;
 }
 
 // This could probably stand to be optimized - seems to have some repeated logic

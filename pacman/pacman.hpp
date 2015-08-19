@@ -12,5 +12,7 @@ protected:
 public:
   PacMan(double xPos, double yPos, int frmeRte);
   
+  void tryToMove(sf::String direction);
+  
   void update(Map map);   // Needs a copy of the map to ask questions about it's position
 };
