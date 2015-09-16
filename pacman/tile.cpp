@@ -5,6 +5,11 @@ PacTile::PacTile(sf::Sprite spr, sf::String typeOfTile){
   tileType = typeOfTile;
 }
 
+PacTile::PacTile(int unused) {
+  sprite = sf::Sprite();
+  tileType = sf::String("");
+}
+
 // Private
 
 // Public

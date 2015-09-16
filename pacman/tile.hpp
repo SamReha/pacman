@@ -9,6 +9,7 @@ private:
   sf::String tileType;
 public:
   PacTile(sf::Sprite spr, sf::String typeOfTile);
+  PacTile(int unused);                // Alternate constructor initializes tile with no type or sprite
 
   sf::Sprite getSprite();                 // Fetches the sf::Sprite associated with this tile
   sf::String getType();

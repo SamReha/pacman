@@ -55,7 +55,7 @@ bool PacMan::canMove(Map map) {
     }
     
     // Otherwise, if we're aligned with the corridor, let Pac man change directions
-    newTileCenterPoint.y = (newMapIndex.y*tileWidth) + map.getAnchor().x;
+    newTileCenterPoint.y = (newMapIndex.y*tileWidth) + map.getAnchor().y;
     
     if (position.y == newTileCenterPoint.y) { // This should probably be checking for a range, instead of exact values. Should also handle corner cutting
       return true;
@@ -71,7 +71,7 @@ bool PacMan::canMove(Map map) {
     }
     
     // Otherwise, if we're aligned with the corridor, let Pac man change directions
-    newTileCenterPoint.y = (newMapIndex.y*tileWidth) + map.getAnchor().x;
+    newTileCenterPoint.y = (newMapIndex.y*tileWidth) + map.getAnchor().y;
     
     if (position.y == newTileCenterPoint.y) { // This should probably be checking for a range, instead of exact values. Should also handle corner cutting
       return true;
@@ -81,16 +81,21 @@ bool PacMan::canMove(Map map) {
 }
 
 // Public
-PacMan::PacMan(double xPos, double yPos, int frmeRte) {
-  position.x = xPos;
-  position.y = yPos;
+PacMan::PacMan(int xIndex, int yIndex, double speed, int frmeRte, Map map) {
+  PacTile tempTile = *map.getTileAtIndex(sf::Vector2<int>(xIndex, yIndex));
+  position.x = 100;//tempTile.getSprite().getPosition().x;
+  position.y = 100;//tempTile.getSprite().getPosition().y;
+  
+  velocity.x = speed;
+  velocity.y = speed;
+  
   frameRate = frmeRte;
   
   desiredDirection = "";
   
   activeVectorIndex = 0;
   timeOfLastSpriteChange = -1.0;
-  sprite.setPosition(xPos, yPos);
+  sprite.setPosition(position.x, position.y);
 }
 
 void PacMan::tryToMove(sf::String direction) {
@@ -99,9 +104,20 @@ void PacMan::tryToMove(sf::String direction) {
 
 // This could probably stand to be optimized - seems to have some repeated logic
 void PacMan::update(Map map) {
-  // First, see if the player has attempted to change Pac's direction, and handle it if they have
+  // First, look at the keyboard to see what the user wants.
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+    desiredDirection = sf::String("UP");
+  } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+    desiredDirection = sf::String("DOWN");
+  } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+    desiredDirection = sf::String("LEFT");
+  } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+    desiredDirection = sf::String("RIGHT");
+  }
+  
+  // See if the player has attempted to change Pac's direction, and handle it if they have
   if (desiredDirection != "" && desiredDirection != moveDir) {
-    if (canMove(map)) {
+    if (/*canMove(map)*/true) {
       moveDir = desiredDirection;
       desiredDirection = "";
     }
@@ -158,7 +174,7 @@ void PacMan::update(Map map) {
   }
   
   PacTile tempTile = *map.getTileAtIndex(newMapIndex);
-  if (tempTile.getType() != "FLOOR") {
+  if (/*tempTile.getType() != "FLOOR"*/false) {
     velocity.x = 0.0;
     velocity.y = 0.0;
     position.x = currentTileCenterPoint.x;
@@ -185,7 +201,10 @@ void PacMan::update(Map map) {
     if (secondsSinceLastSpriteChange > 1.0/frameRate) {
       activeVectorIndex = (activeVectorIndex+1)%vectorLength;
       sprite = activeSpriteVector[activeVectorIndex];
-      timeOfLastSpriteChange = (double) clock();
+      timeOfLastSpriteChange = (double) clock()/CLOCKS_PER_SEC;
     }
   }
+  
+  // And before we wrap up, set our new sprite to our current position
+  sprite.setPosition(position.x, position.y);
 }

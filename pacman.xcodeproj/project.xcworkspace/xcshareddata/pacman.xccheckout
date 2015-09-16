@@ -7,21 +7,21 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>E88C9802-361C-495B-BE49-ABE9A4A1263B</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>pacman</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>152885FEC6C0F4EC275F5323AF7A9479A43506D4</key>
-		<string>github.com:SamReha/pacman.git</string>
+		<string>https://github.com/SamReha/pacman.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>pacman.xcodeproj/project.xcworkspace</string>
+	<string>pacman.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>152885FEC6C0F4EC275F5323AF7A9479A43506D4</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>github.com:SamReha/pacman.git</string>
+	<string>https://github.com/SamReha/pacman.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>

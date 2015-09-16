@@ -10,7 +10,7 @@ protected:
   double timeOfLastSpriteChange;
   bool canMove(Map map);
 public:
-  PacMan(double xPos, double yPos, int frmeRte);
+  PacMan(int xIndex, int yIndex, double speed, int frmeRte, Map map);
   
   void tryToMove(sf::String direction);
   
