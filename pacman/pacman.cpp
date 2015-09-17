@@ -82,9 +82,14 @@ bool PacMan::canMove(Map map) {
 
 // Public
 PacMan::PacMan(int xIndex, int yIndex, double speed, int frmeRte, Map map) {
-  PacTile tempTile = *map.getTileAtIndex(sf::Vector2<int>(xIndex, yIndex));
-  position.x = 100;//tempTile.getSprite().getPosition().x;
-  position.y = 100;//tempTile.getSprite().getPosition().y;
+  sf::Vector2<double> anchor = map.getAnchor();
+  int tileWidth = map.getTileWidth();
+  
+  position.x = anchor.x + (tileWidth*xIndex);
+  position.y = anchor.y + (tileWidth*yIndex);
+  
+  std::cout << std::to_string(position.x) + '\n';
+  std::cout << position.y;
   
   velocity.x = speed;
   velocity.y = speed;
@@ -95,6 +100,24 @@ PacMan::PacMan(int xIndex, int yIndex, double speed, int frmeRte, Map map) {
   
   activeVectorIndex = 0;
   timeOfLastSpriteChange = -1.0;
+  sprite.setPosition(position.x, position.y);
+}
+
+// Make a point to call this one AFTER you've set your sprite vectors!
+void PacMan::initialize(sf::String direction) {
+  desiredDirection = direction;
+  
+  if (desiredDirection == "UP") {
+    activeSpriteVector = upSprites;
+  } else if (desiredDirection == "DOWN") {
+    activeSpriteVector = downSprites;
+  } else if (desiredDirection == "LEFT") {
+    activeSpriteVector = leftSprites;
+  } else if (desiredDirection == "RIGHT") {
+    activeSpriteVector = rightSprites;
+  }
+  
+  sprite = activeSpriteVector[0];
   sprite.setPosition(position.x, position.y);
 }
 
@@ -174,7 +197,7 @@ void PacMan::update(Map map) {
   }
   
   PacTile tempTile = *map.getTileAtIndex(newMapIndex);
-  if (/*tempTile.getType() != "FLOOR"*/false) {
+  if (tempTile.getType() != "FLOOR") {
     velocity.x = 0.0;
     velocity.y = 0.0;
     position.x = currentTileCenterPoint.x;
@@ -185,7 +208,7 @@ void PacMan::update(Map map) {
   }
 
   // Update active sprite vector so we know what animation should be playing
-  if (velocity.x != 0.0 && velocity.y != 0.0) {
+  if (velocity.x != 0.0 || velocity.y != 0.0) {
     if (moveDir == "UP") {
       activeSpriteVector = upSprites;
     } else if (moveDir == "DOWN") {
@@ -200,9 +223,10 @@ void PacMan::update(Map map) {
     double secondsSinceLastSpriteChange = ((double) clock()/CLOCKS_PER_SEC) - timeOfLastSpriteChange;
     if (secondsSinceLastSpriteChange > 1.0/frameRate) {
       activeVectorIndex = (activeVectorIndex+1)%vectorLength;
-      sprite = activeSpriteVector[activeVectorIndex];
+      
       timeOfLastSpriteChange = (double) clock()/CLOCKS_PER_SEC;
     }
+    sprite = activeSpriteVector[activeVectorIndex];
   }
   
   // And before we wrap up, set our new sprite to our current position

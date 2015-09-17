@@ -152,7 +152,7 @@ int main(int, char const**)
   // Variabes used to draw map
   
   // Assemble the PacMan!
-  PacMan pacman(1, 1, 1, 24, map);
+  PacMan pacman(5, 5, 1, 60, map);
   std::vector<sf::Sprite> pacUpSprites;
   std::vector<sf::Sprite> pacDownSprites;
   std::vector<sf::Sprite> pacLeftSprites;
@@ -161,25 +161,29 @@ int main(int, char const**)
   pacUpSprites.push_back(spriteSet["pacUp0"]);
   pacUpSprites.push_back(spriteSet["pacUp1"]);
   pacUpSprites.push_back(spriteSet["pacUp2"]);
+  pacUpSprites.push_back(spriteSet["pacUp1"]);
   
   pacDownSprites.push_back(spriteSet["pacDown0"]);
   pacDownSprites.push_back(spriteSet["pacDown1"]);
   pacDownSprites.push_back(spriteSet["pacDown2"]);
+  pacDownSprites.push_back(spriteSet["pacDown1"]);
   
   pacLeftSprites.push_back(spriteSet["pacLeft0"]);
   pacLeftSprites.push_back(spriteSet["pacLeft1"]);
   pacLeftSprites.push_back(spriteSet["pacLeft2"]);
+  pacLeftSprites.push_back(spriteSet["pacLeft1"]);
   
   pacRightSprites.push_back(spriteSet["pacRight0"]);
   pacRightSprites.push_back(spriteSet["pacRight1"]);
   pacRightSprites.push_back(spriteSet["pacRight2"]);
+  pacRightSprites.push_back(spriteSet["pacRight1"]);
   
-  pacman.setUpSprites(pacUpSprites, 3);
-  pacman.setDownSprites(pacDownSprites, 3);
-  pacman.setLeftSprites(pacLeftSprites, 3);
-  pacman.setRightSprites(pacRightSprites, 3);
+  pacman.setUpSprites(pacUpSprites, 4);
+  pacman.setDownSprites(pacDownSprites, 4);
+  pacman.setLeftSprites(pacLeftSprites, 4);
+  pacman.setRightSprites(pacRightSprites, 4);
   pacman.setVelocity(sf::Vector2<double>(0.0, 1.0));
-  pacman.tryToMove("RIGHT");
+  pacman.initialize("RIGHT");
   
   
   // Play the music
