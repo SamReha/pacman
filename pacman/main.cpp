@@ -129,18 +129,16 @@ int main(int, char const**)
   map.configureMap(tileSet);
   
   // Create a graphical text to display
-  sf::Font font;
+  /*sf::Font font;
   if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
     return EXIT_FAILURE;
   }
-  sf::Text text("Hello SFML", font, 50);
-  text.setColor(sf::Color::Black);
 
   // Load a music to play
   sf::Music music;
   if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
     return EXIT_FAILURE;
-  }
+  }*/
   
   // Declare the ghosts!
   Pinky pinky(sf::Vector2<double>(0, 0), "HOME");
@@ -149,10 +147,8 @@ int main(int, char const**)
   Sue sue(sf::Vector2<double>(0, 0), "HOME");
   
   // Game variables
-  // Variabes used to draw map
-  
   // Assemble the PacMan!
-  PacMan pacman(5, 5, 1, 60, map);
+  PacMan pacman(1, 1, 1, 60, map);
   std::vector<sf::Sprite> pacUpSprites;
   std::vector<sf::Sprite> pacDownSprites;
   std::vector<sf::Sprite> pacLeftSprites;
@@ -208,10 +204,9 @@ int main(int, char const**)
     pacman.update(map);
 
     // DRAWING THE SCREEN
-    // Clear screen
     window.clear();
     
-    // Draw the map - logic is a bit messy
+    // Draw the map
     drawMap(&window, map);
     
     // Then, draw any pellets / fruits, those type things
